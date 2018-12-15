@@ -7,29 +7,82 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Traduction-->
+        <!--Translate-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController id="9pv-A4-QxB" customClass="TranslateViewController" customModule="Le_Baluchon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9pv-A4-QxB" userLabel="Translate" customClass="TranslateViewController" customModule="Le_Baluchon" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tsR-hK-woN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Traduction" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Td-i8-F4m">
-                                <rect key="frame" x="146" y="323" width="82" height="21"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D9r-3H-s43">
+                                <rect key="frame" x="16" y="107" width="343" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cu9-3b-nZe">
+                                <rect key="frame" x="20" y="40" width="335" height="36"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Français" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1nd-6z-zOO">
+                                        <rect key="frame" x="0.0" y="0.0" width="106.5" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Td-Ek-ONU">
+                                        <rect key="frame" x="114.5" y="0.0" width="106" height="36"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="&lt;-&gt;"/>
+                                        <connections>
+                                            <action selector="changeLanguage:" destination="9pv-A4-QxB" eventType="touchUpInside" id="s2c-Gl-hoR"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Anglais" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SmE-Up-YUq">
+                                        <rect key="frame" x="228.5" y="0.0" width="106.5" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qIm-nc-oqZ">
+                                <rect key="frame" x="16" y="350" width="343" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bss-Vz-m42">
+                                <rect key="frame" x="126" y="294" width="122" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Traduire"/>
+                                <connections>
+                                    <action selector="translate:" destination="9pv-A4-QxB" eventType="touchUpInside" id="6Tg-7n-aUs"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="cu9-3b-nZe" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="20" id="Vpp-5L-kFs"/>
+                            <constraint firstItem="cu9-3b-nZe" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" constant="20" id="m6E-oY-nGz"/>
+                            <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="cu9-3b-nZe" secondAttribute="trailing" constant="20" id="y3Z-Fa-dHw"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Traduction" image="speech_buble" id="acW-dT-cKf"/>
+                    <connections>
+                        <outlet property="englishLabel" destination="SmE-Up-YUq" id="i6r-jO-ptu"/>
+                        <outlet property="frenchLabel" destination="1nd-6z-zOO" id="mPT-mk-pQM"/>
+                        <outlet property="translatedText" destination="qIm-nc-oqZ" id="wdh-CQ-y7o"/>
+                        <outlet property="userText" destination="D9r-3H-s43" id="IlZ-Lw-g8R"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
@@ -60,10 +113,10 @@
             </objects>
             <point key="canvasLocation" x="790" y="-826"/>
         </scene>
-        <!--Conversion-->
+        <!--Change-->
         <scene sceneID="RUd-u5-0gg">
             <objects>
-                <viewController id="gzb-T5-f61" customClass="ChangeViewController" customModule="Le_Baluchon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="gzb-T5-f61" userLabel="Change" customClass="ChangeViewController" customModule="Le_Baluchon" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dhj-q7-oea">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -105,7 +158,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Q3A-NA-XJy">
                                         <rect key="frame" x="0.0" y="60" width="335" height="40"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1000" borderStyle="roundedRect" textAlignment="right" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1Ev-zf-lyT">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" adjustsFontSizeToFit="NO" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1Ev-zf-lyT">
                                                 <rect key="frame" x="0.0" y="0.0" width="306" height="40"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
@@ -164,7 +217,7 @@
                                     <stackView opaque="NO" contentMode="scaleAspectFit" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="DRg-n2-8YT">
                                         <rect key="frame" x="0.0" y="60" width="335" height="40"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1000" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ha6-Bb-MeH">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ha6-Bb-MeH">
                                                 <rect key="frame" x="0.0" y="0.0" width="306" height="40"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
@@ -195,6 +248,7 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="86p-jc-oQh" firstAttribute="trailing" secondItem="5Mq-SL-XSx" secondAttribute="trailing" constant="20" id="509-a2-uYt"/>
                             <constraint firstItem="86p-jc-oQh" firstAttribute="trailing" secondItem="59O-jc-Mz9" secondAttribute="trailing" constant="20" id="JbR-Cw-mJG"/>
@@ -204,6 +258,9 @@
                             <constraint firstItem="5Mq-SL-XSx" firstAttribute="leading" secondItem="86p-jc-oQh" secondAttribute="leading" constant="20" id="tS0-I2-v39"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="86p-jc-oQh"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="baG-Q2-ywX" appends="YES" id="Q7P-gJ-K2r"/>
+                        </connections>
                     </view>
                     <tabBarItem key="tabBarItem" title="Conversion" image="us_dollar" id="NLt-ff-WWP"/>
                     <connections>
@@ -213,6 +270,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V9q-91-BNx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="baG-Q2-ywX">
+                    <connections>
+                        <action selector="dismissKeyboard:" destination="gzb-T5-f61" id="8wQ-gZ-W2k"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1480.8" y="-826.23688155922048"/>
         </scene>
