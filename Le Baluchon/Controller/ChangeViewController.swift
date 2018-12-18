@@ -33,11 +33,11 @@ class ChangeViewController: UIViewController {
         self.updateAmountInDollar()
     }
     func updateAmountInEuro() {
-        amountInEuro.text =  change.convert(amountInDollar.text, fromCurrency: .dollarUS, toCurrency: .euro)
+        amountInEuro.text =  change.convert(amountInDollar.text, sourceCurrency: .dollarUS, targetCurrency: .euro)
     }
 
     func updateAmountInDollar() {
-        amountInDollar.text =  change.convert(amountInEuro.text, fromCurrency: .euro, toCurrency: .dollarUS)
+        amountInDollar.text =  change.convert(amountInEuro.text, sourceCurrency: .euro, targetCurrency: .dollarUS)
     }
 
     @IBAction func amountInEuroEdited(_ sender: UITextField) {

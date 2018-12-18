@@ -9,7 +9,7 @@ struct Change: Codable {
     private var rates: [String : Float]
     var date: String
 
-    func convert(_ amount: String?, fromCurrency: Currency, toCurrency: Currency) -> String {
+    func convert(_ amount: String?, sourceCurrency: Currency, targetCurrency: Currency) -> String {
         guard let amountString = amount else {
             return ""
         }
@@ -18,13 +18,13 @@ struct Change: Codable {
             return ""
         }
 
-        if toCurrency == .euro {
-            guard let currencyRate = rates[fromCurrency.rawValue] else {
+        if targetCurrency == .euro {
+            guard let currencyRate = rates[sourceCurrency.rawValue] else {
                 return ""
             }
             return String(amountFloat * 1 / currencyRate)
         } else {
-            guard let currencyRate = rates[toCurrency.rawValue] else {
+            guard let currencyRate = rates[targetCurrency.rawValue] else {
                 return ""
             }
             return String(amountFloat * currencyRate)
