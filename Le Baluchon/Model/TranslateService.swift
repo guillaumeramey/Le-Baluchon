@@ -8,12 +8,12 @@ class TranslateService {
 
     let session = URLSession.init(configuration: .default)
 
-    func translate(query: String, sourceLanguage: String, targetLanguage: String, callback: @escaping (Bool, Translation?) -> Void) {
+    func translate(_ query: String, _ sourceLanguage: Language, _ targetLanguage: Language, callback: @escaping (Bool, Translation?) -> Void) {
 
         let urlString = apiUrl
             + "?q=" + query
-            + "&source=" + sourceLanguage
-            + "&target=" + targetLanguage
+            + "&source=" + sourceLanguage.rawValue
+            + "&target=" + targetLanguage.rawValue
             + "&key=" + apiKey
 
         guard let encodeString = urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed), let url = URL(string: encodeString) else {

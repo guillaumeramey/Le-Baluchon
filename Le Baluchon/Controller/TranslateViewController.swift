@@ -2,17 +2,11 @@ import UIKit
 
 class TranslateViewController: UIViewController {
 
-    enum Language: String {
-        case french = "fr"
-        case english = "en"
-    }
-    let languageString = ["fr" : "Français",
-                          "en" : "Anglais"]
-    var translation: Translation!
     var sourceLanguage: Language!
     var targetLanguage: Language!
 
     @IBOutlet weak var userText: UITextView!
+    @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var translatedText: UITextView!
     @IBOutlet weak var sourceLanguageLabel: UILabel!
     @IBOutlet weak var targetLanguageLabel: UILabel!
@@ -24,12 +18,8 @@ class TranslateViewController: UIViewController {
     }
 
     func drawDesign() {
-        let borderColor : UIColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1.0)
-        userText.layer.borderWidth = 0.5
-        userText.layer.borderColor = borderColor.cgColor
         userText.layer.cornerRadius = 5.0
-        translatedText.layer.borderWidth = 0.5
-        translatedText.layer.borderColor = borderColor.cgColor
+        userText.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 30)
         translatedText.layer.cornerRadius = 5.0
     }
 
@@ -46,13 +36,24 @@ class TranslateViewController: UIViewController {
     }
 
     @IBAction func translate(_ sender: Any) {
-        TranslateService().translate(query: userText.text, sourceLanguage: sourceLanguage.rawValue, targetLanguage: targetLanguage.rawValue, callback: { (success, translation) in
+        TranslateService().translate(userText.text, sourceLanguage, targetLanguage, callback: { (success, translation) in
             if success, let translation = translation {
-                self.translation = translation
-                self.translatedText.text = self.translation.data.translations[0].translatedText
+                self.translatedText.text = translation.translatedText
             } else {
-                self.translatedText.text = "Erreur quelque part"
+                self.translatedText.text = "Impossible de traduire le texte"
             }
         })
+    }
+
+    @IBAction func clearButtonPressed(_ sender: Any) {
+        userText.text = ""
+    }
+}
+
+// MARK: - Keyboard
+extension TranslateViewController: UITextFieldDelegate {
+    @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
+        userText.resignFirstResponder()
+        //clearButton.isHidden = true
     }
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-struct Change: Codable {
+struct Change: Decodable {
     enum Currency: String {
         case euro = "EUR"
         case dollarUS = "USD"

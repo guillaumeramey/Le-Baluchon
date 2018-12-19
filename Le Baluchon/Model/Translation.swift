@@ -1,13 +1,17 @@
 import Foundation
 
-struct Translation: Codable {
+struct Translation: Decodable {
     var data: JsonData
+
+    var translatedText: String {
+        return data.translations[0].translatedText
+    }
 }
 
-struct JsonData: Codable {
+struct JsonData: Decodable {
     var translations: [Translations]
 }
 
-struct Translations: Codable {
+struct Translations: Decodable {
     var translatedText: String
 }
