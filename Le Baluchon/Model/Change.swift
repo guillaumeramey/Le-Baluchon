@@ -7,9 +7,33 @@ struct Change: Decodable {
     }
 
     private var rates: [String : Float]
-    var date: String
+    private var date: String
 
-    func convert(_ amount: String?, sourceCurrency: Currency, targetCurrency: Currency) -> String {
+    var dateFormatted: String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .none
+        dateFormatter.locale = Locale(identifier: "FR-fr")
+
+        guard let date = formatDate() else {
+            return "Impossible de formater la date"
+        }
+
+        return dateFormatter.string(from: date)
+    }
+
+    private func formatDate() -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "y-M-d"
+
+        guard let date = dateFormatter.date(from: date) else {
+            return nil
+        }
+
+        return date
+    }
+    
+    func convert(_ amount: String?, from sourceCurrency: Currency, to targetCurrency: Currency) -> String {
         guard let amountString = amount else {
             return ""
         }
@@ -22,12 +46,12 @@ struct Change: Decodable {
             guard let currencyRate = rates[sourceCurrency.rawValue] else {
                 return ""
             }
-            return String(amountFloat * 1 / currencyRate)
+            return String(format: "%.2f", amountFloat * 1 / currencyRate)
         } else {
             guard let currencyRate = rates[targetCurrency.rawValue] else {
                 return ""
             }
-            return String(amountFloat * currencyRate)
+            return String(format: "%.2f", amountFloat * currencyRate)
         }
     }
 }

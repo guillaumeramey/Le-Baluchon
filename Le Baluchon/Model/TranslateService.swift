@@ -1,12 +1,18 @@
 import Foundation
 
 class TranslateService {
+    static var shared = TranslateService()
+    private init() {}
 
     private let apiUrl = "https://translation.googleapis.com/language/translate/v2"
     private let apiKey = "AIzaSyA6LOP2joYT0W1QRhQy07ej13GAJiifSxE"
     private var task: URLSessionDataTask!
 
-    let session = URLSession.init(configuration: .default)
+    private var translateSession = URLSession.init(configuration: .default)
+
+    init(translateSession: URLSession) {
+        self.translateSession = translateSession
+    }
 
     func translate(_ query: String, _ sourceLanguage: Language, _ targetLanguage: Language, callback: @escaping (Bool, Translation?) -> Void) {
 
@@ -24,7 +30,7 @@ class TranslateService {
         let request = URLRequest(url: url)
 
         task?.cancel()
-        task = session.dataTask(with: request) { (data, response, error) in
+        task = translateSession.dataTask(with: request) { (data, response, error) in
             DispatchQueue.main.async {
                 guard let data = data, error == nil else {
                     callback(false, nil)

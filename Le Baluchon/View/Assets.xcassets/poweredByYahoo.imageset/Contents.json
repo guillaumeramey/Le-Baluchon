@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "white_retina.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "poweredByYahoo.png",
       "scale" : "2x"
     },
     {

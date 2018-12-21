@@ -1,14 +1,10 @@
-//
-//  WeatherService.swift
-//  Le Baluchon
-//
-//  Created by Guillaume Ramey on 18/12/2018.
-//  Copyright © 2018 Guillaume Ramey. All rights reserved.
-//
-
 import Foundation
 
 class WeatherService {
+    /*
+    static var shared = WeatherService()
+    private init() {}
+ */
 
     enum City: String {
         case paris = "615702"
@@ -16,18 +12,20 @@ class WeatherService {
     }
 
     private let queryUrl = URL(string: "https://query.yahooapis.com/v1/public/yql?")!
-
     private var task: URLSessionDataTask!
 
-    let session = URLSession.init(configuration: .default)
+    private var weatherSession = URLSession.init(configuration: .default)
+/*
+    init(weatherSession: URLSession) {
+        self.weatherSession = weatherSession
+    }
+ */
 
     func getWeather(for city: City, callback: @escaping (Bool, Weather?) -> Void) {
-
-        //let request = URLRequest(url: endPoint)
-        let request = createQuoteRequest(for: city)
+        let request = createRequest(for: city)
 
         task?.cancel()
-        task = session.dataTask(with: request) { (data, response, error) in
+        task = weatherSession.dataTask(with: request) { (data, response, error) in
             DispatchQueue.main.async {
                 guard let data = data, error == nil else {
                     callback(false, nil)
@@ -51,7 +49,7 @@ class WeatherService {
         task?.resume()
     }
 
-    private func createQuoteRequest(for city: City) -> URLRequest {
+    private func createRequest(for city: City) -> URLRequest {
         var request = URLRequest(url: queryUrl)
         request.httpMethod = "POST"
 

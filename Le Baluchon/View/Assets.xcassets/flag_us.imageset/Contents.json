@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "flag_us.pdf",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "flag_us.png",
       "scale" : "2x"
     },
     {

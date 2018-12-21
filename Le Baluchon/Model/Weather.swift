@@ -25,7 +25,7 @@ struct Weather: Decodable {
         return dateFormatter.string(from: date)
     }
 
-    func formatDate() -> Date? {
+    private func formatDate() -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "E, dd MMM y hh:mm a"
 
@@ -39,7 +39,7 @@ struct Weather: Decodable {
         return date
     }
 
-    func isDaylight() -> Bool {
+    private func isDaylight() -> Bool {
         guard let date = formatDate() else {
             return true
         }

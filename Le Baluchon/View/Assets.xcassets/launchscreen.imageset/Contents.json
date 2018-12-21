@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "launchscreen.pdf",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "New-York.pdf",
       "scale" : "2x"
     },
     {
