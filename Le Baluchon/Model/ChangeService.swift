@@ -1,10 +1,13 @@
 import Foundation
 
 class ChangeService {
+    // singleton pattern
     static var shared = ChangeService()
     private init() {}
 
-    private let changeUrl = URL(string: "http://data.fixer.io/api/latest?access_key=a379e695a1f14ed79ab8f9bd2ff1a688&symbols=USD")!
+    private let apiUrl = "http://data.fixer.io/api/latest"
+    private let apiKey = valueForAPIKey("fixer")
+
     private var task: URLSessionDataTask!
 
     private var changeSession = URLSession.init(configuration: .default)
@@ -13,8 +16,14 @@ class ChangeService {
         self.changeSession = changeSession
     }
 
+    // API request
     func getRates(callback: @escaping (Bool, Change?) -> Void) {
-        let request = URLRequest(url: changeUrl)
+
+        let urlString = apiUrl
+            + "?access_key=" + apiKey
+            + "&symbols=USD"
+
+        let request = URLRequest(url: URL(string: urlString)!)
 
         task?.cancel()
         task = changeSession.dataTask(with: request) { (data, response, error) in

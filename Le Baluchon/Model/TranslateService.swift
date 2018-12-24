@@ -1,11 +1,13 @@
 import Foundation
 
 class TranslateService {
+    // singleton pattern
     static var shared = TranslateService()
     private init() {}
 
     private let apiUrl = "https://translation.googleapis.com/language/translate/v2"
-    private let apiKey = "AIzaSyA6LOP2joYT0W1QRhQy07ej13GAJiifSxE"
+    private let apiKey = valueForAPIKey("google")
+
     private var task: URLSessionDataTask!
 
     private var translateSession = URLSession.init(configuration: .default)
@@ -14,14 +16,17 @@ class TranslateService {
         self.translateSession = translateSession
     }
 
-    func translate(_ query: String, _ sourceLanguage: Language, _ targetLanguage: Language, callback: @escaping (Bool, Translation?) -> Void) {
+    // API request
+    func translate(_ textToTranslate: String, from sourceLanguage: Language, to targetLanguage: Language, callback: @escaping (Bool, Translation?) -> Void) {
 
         let urlString = apiUrl
-            + "?q=" + query
+            + "?q=" + textToTranslate
+            + "&key=" + apiKey
             + "&source=" + sourceLanguage.rawValue
             + "&target=" + targetLanguage.rawValue
-            + "&key=" + apiKey
+            + "&format=text"
 
+        // removes forbidden characters
         guard let encodeString = urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed), let url = URL(string: encodeString) else {
             callback(false, nil)
             return

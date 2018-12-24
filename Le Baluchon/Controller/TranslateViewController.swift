@@ -3,9 +3,11 @@ import AVFoundation
 
 class TranslateViewController: UIViewController {
 
+    // MARK: - Properties
     private var sourceLanguage: Language!
     private var targetLanguage: Language!
 
+    // MARK: - Outlets
     @IBOutlet weak var userText: UITextView!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var translatedText: UITextView!
@@ -31,6 +33,7 @@ class TranslateViewController: UIViewController {
         toggleLanguage(self)
     }
 
+    // switch source and target languages
     @IBAction func toggleLanguage(_ sender: Any) {
         if sourceLanguage == .french {
             sourceLanguage = .english
@@ -45,12 +48,13 @@ class TranslateViewController: UIViewController {
         UIView.commitAnimations()
     }
 
+    // request a translation
     @IBAction func translate(_ sender: Any) {
         userText.resignFirstResponder()
         translatedText.text = ""
         translateActivityIndicator.isHidden = false
 
-        TranslateService.shared.translate(userText.text, sourceLanguage, targetLanguage, callback: { (success, translation) in
+        TranslateService.shared.translate(userText.text, from: sourceLanguage, to: targetLanguage, callback: { (success, translation) in
             if success, let translation = translation {
                 self.translateActivityIndicator.isHidden = true
                 self.translatedText.text = translation.translatedText
@@ -61,10 +65,7 @@ class TranslateViewController: UIViewController {
         })
     }
 
-    @IBAction func clearButtonPressed(_ sender: Any) {
-        userText.text = ""
-    }
-
+    // error alert
     private func presentAlert() {
         let alertVC = UIAlertController(title: "Erreur", message: "Impossible de traduire le texte", preferredStyle: .alert)
         let actionOk = UIAlertAction(title: "OK", style: .cancel, handler: nil)
@@ -72,7 +73,7 @@ class TranslateViewController: UIViewController {
         present(alertVC, animated: true, completion: nil)
     }
 
-    // white status bar
+    // white status bar functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
@@ -87,6 +88,10 @@ class TranslateViewController: UIViewController {
 extension TranslateViewController: UITextFieldDelegate {
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         userText.resignFirstResponder()
+    }
+
+    @IBAction func clearButtonPressed(_ sender: Any) {
+        userText.text = ""
     }
 }
 

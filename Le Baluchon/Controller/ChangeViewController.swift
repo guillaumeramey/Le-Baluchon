@@ -2,84 +2,81 @@ import UIKit
 
 class ChangeViewController: UIViewController {
 
-    @IBOutlet weak var amountInEuro: UITextField!
-    @IBOutlet weak var amountInDollar: UITextField!
-    @IBOutlet weak var rateUpToDate: UILabel!
-    @IBOutlet weak var euroView: UIStackView!
-    @IBOutlet weak var dollarView: UIStackView!
-    
+    // MARK: - Properties
     private var change: Change!
     private var rate: Float!
-    private var topView = "EUR"
+    private var topView: UIStackView!
+
+    // MARK: - Outlets
+    @IBOutlet weak var rateUpToDate: UILabel!
+    @IBOutlet var currencies: [UIStackView]!
+    @IBOutlet var amounts: [UITextField]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         updateRates()
-        amountInEuro.isEnabled = false
-        amountInDollar.isEnabled = false
 
-        createClearButton(for: amountInEuro)
-        createClearButton(for: amountInDollar)
+        topView = currencies[0]
+
+        createClearButtons()
     }
 
+    // API request to update currencies rates
     private func updateRates() {
+        for amount in amounts {
+            amount.isEnabled = false
+        }
         self.rateUpToDate.text = "Mise à jour du taux de change..."
+        
         ChangeService.shared.getRates { (success, change) in
             if success, let change = change {
                 self.change = change
                 self.rateUpToDate.text = "Mis à jour le " + change.dateFormatted
-                self.updateAmounts()
+                self.amounts[0].text = "1"
+                self.amounts[1].text =  change.convert(self.amounts[0].text, from: .euro, to: .dollarUS)
+                for amount in self.amounts {
+                    amount.isEnabled = true
+                }
             } else {
-                self.rateUpToDate.text = ""
+                self.rateUpToDate.text = "Mise à jour impossible"
                 self.presentAlert()
             }
         }
     }
 
-    private func updateAmounts() {
-        amountInEuro.text =  "1"
-        updateAmountInDollar()
-        amountInEuro.isEnabled = true
-        amountInDollar.isEnabled = true
+    @IBAction func refreshButtonPressed(_ sender: Any) {
+        updateRates()
     }
 
-    private func updateAmountInEuro() {
-        amountInEuro.text =  change.convert(amountInDollar.text, from: .dollarUS, to: .euro)
+    @IBAction func amountEdited(_ sender: UITextField) {
+        switch sender.tag {
+        case 1:
+            amounts[1].text = change.convert(amounts[0].text, from: .euro, to: .dollarUS)
+        case 2:
+            amounts[0].text =  change.convert(amounts[1].text, from: .dollarUS, to: .euro)
+        default:
+            break
+        }
     }
-
-    private func updateAmountInDollar() {
-        amountInDollar.text =  change.convert(amountInEuro.text, from: .euro, to: .dollarUS)
-    }
-
-    @IBAction func amountInEuroEdited(_ sender: UITextField) {
-        updateAmountInDollar()
-    }
-
-    @IBAction func amountInDollarEdited(_ sender: UITextField) {
-        updateAmountInEuro()
-    }
-
-    @IBAction func amountInEuroEditingDidBegin(_ sender: Any) {
-        if topView != "EUR" {
-            switchViews()
-            topView = "EUR"
+    
+    // move the currency currently edited to the top
+    @IBAction func amountEditingDidBegin(_ sender: UITextField) {
+        if topView.tag != sender.tag {
+            for currency in currencies where currency.tag == sender.tag {
+                switchViews(currency, topView)
+                topView = currency
+            }
         }
     }
 
-    @IBAction func amountInDollarEditingDidBegin(_ sender: Any) {
-        if topView != "USD" {
-            switchViews()
-            topView = "USD"
-        }
-    }
-
-    private func switchViews() {
+    private func switchViews(_ view1: UIView, _ view2: UIView) {
         UIView.beginAnimations(nil, context: nil)
-        (euroView.frame.origin, dollarView.frame.origin) = (dollarView.frame.origin, euroView.frame.origin)
+        (view1.frame.origin, view2.frame.origin) = (view2.frame.origin, view1.frame.origin)
         UIView.commitAnimations()
     }
 
+    // error alert
     private func presentAlert() {
         let alertVC = UIAlertController(title: "Erreur", message: "Impossible de mettre à jour le taux de change", preferredStyle: .alert)
         let actionOk = UIAlertAction(title: "OK", style: .cancel, handler: nil)
@@ -93,26 +90,8 @@ class ChangeViewController: UIViewController {
         updateRates()
     }
 
-    private func createClearButton(for textField: UITextField) {
-        let height = textField.bounds.height / 3
-        let width = height + 10
-        let rect = CGRect(x: 0, y: 0, width: width, height: height)
 
-        let clearButton = UIButton(frame: rect)
-        clearButton.setImage(UIImage(named: "clear button white"), for: .normal)
-        clearButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-        clearButton.addTarget(self, action: #selector(clearButtonPressed), for: .touchUpInside)
-
-        textField.rightView = clearButton
-        textField.rightViewMode = .whileEditing
-    }
-
-    @objc private func clearButtonPressed(sender: UIButton) {
-        amountInEuro.text = ""
-        amountInDollar.text = ""
-    }
-
-    // white status bar
+    // white status bar functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
@@ -126,7 +105,31 @@ class ChangeViewController: UIViewController {
 // MARK: - Keyboard
 extension ChangeViewController: UITextFieldDelegate {
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
-        amountInEuro.resignFirstResponder()
-        amountInDollar.resignFirstResponder()
+        for amount in amounts {
+            amount.resignFirstResponder()
+        }
+    }
+
+    // creates a white clear button in the keyboard for all textfields
+    private func createClearButtons() {
+        for amount in amounts {
+            let height = amount.bounds.height / 3
+            let width = height + 10
+            let rect = CGRect(x: 0, y: 0, width: width, height: height)
+
+            let clearButton = UIButton(frame: rect)
+            clearButton.setImage(UIImage(named: "clear button white"), for: .normal)
+            clearButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+            clearButton.addTarget(self, action: #selector(clearButtonPressed), for: .touchUpInside)
+
+            amount.rightView = clearButton
+            amount.rightViewMode = .whileEditing
+        }
+    }
+
+    @objc private func clearButtonPressed(sender: UIButton) {
+        for amount in amounts {
+            amount.text = ""
+        }
     }
 }

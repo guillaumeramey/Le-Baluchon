@@ -1,46 +1,48 @@
 import Foundation
 
 struct Weather: Decodable {
+
+    enum City: Int {
+        case paris = 0, newyork
+    }
+
     let query: Query
 
-    var code: String {
-        return query.results.channel.item.condition.code
+    func getTemperature(for city: City) -> String {
+        return query.results.channel[city.rawValue].item.condition.temp + "°"
     }
 
-    var temperature: String {
-        return query.results.channel.item.condition.temp + "°"
-    }
-
-    // Formats the date
-    var date: String {
+    // Formats the date for display
+    func getDate(for city: City) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .long
         dateFormatter.timeStyle = .short
         dateFormatter.locale = Locale(identifier: "FR-fr")
 
-        guard let date = formatDate() else {
+        guard let date = formatDate(for: city) else {
             return "Impossible de formater la date"
         }
 
         return dateFormatter.string(from: date)
     }
 
-    private func formatDate() -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "E, dd MMM y hh:mm a"
+    // gets an image describing the weather depending of the hour
+    func getWeatherImage(for city: City) -> Data? {
+        var urlString = "https://s.yimg.com/zz/combo?a/i/us/nws/weather/gr/"
+        urlString += query.results.channel[city.rawValue].item.condition.code
+        urlString += isDaytime(in: city) ? "d" : "n"
+        urlString += ".png"
 
-        var dateString = query.results.channel.item.condition.date
-        dateString.removeLast(4)
-
-        guard let date = dateFormatter.date(from: dateString) else {
+        do {
+            return try Data(contentsOf: URL(string: urlString)!)
+        } catch {
             return nil
         }
-
-        return date
     }
 
-    private func isDaylight() -> Bool {
-        guard let date = formatDate() else {
+    // returns true if it's daytime in the city
+    private func isDaytime(in city: City) -> Bool {
+        guard let date = formatDate(for: city) else {
             return true
         }
 
@@ -53,16 +55,19 @@ struct Weather: Decodable {
         return false
     }
 
-    func getImage(forCode code: String) -> Data? {
-        var urlString = "https://s.yimg.com/zz/combo?a/i/us/nws/weather/gr/"
-        urlString += code
-        urlString += isDaylight() ? "d" : "n"
-        urlString += ".png"
-        do {
-            return try Data(contentsOf: URL(string: urlString)!)
-        } catch {
+    // converts the date in json file from string to date
+    private func formatDate(for city: City) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E, dd MMM y hh:mm a"
+
+        var dateString = query.results.channel[city.rawValue].item.condition.date
+        dateString.removeLast(4)
+
+        guard let date = dateFormatter.date(from: dateString) else {
             return nil
         }
+
+        return date
     }
 }
 
@@ -71,7 +76,7 @@ struct Query: Decodable {
 }
 
 struct Results: Decodable {
-    let channel: Channel
+    let channel: [Channel]
 }
 
 struct Channel: Decodable {

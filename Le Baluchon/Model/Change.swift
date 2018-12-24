@@ -6,10 +6,11 @@ struct Change: Decodable {
         case dollarUS = "USD"
     }
 
-    private var rates: [String : Float]
+    var rates: [String : Float]
     private var date: String
 
-    var dateFormatted: String{
+    // formats the date for display
+    var dateFormatted: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .long
         dateFormatter.timeStyle = .none
@@ -32,7 +33,8 @@ struct Change: Decodable {
 
         return date
     }
-    
+
+    // converts an amount from a currency to another
     func convert(_ amount: String?, from sourceCurrency: Currency, to targetCurrency: Currency) -> String {
         guard let amountString = amount else {
             return ""

@@ -1,7 +1,7 @@
 import Foundation
 
 struct Translation: Decodable {
-    var data: JsonData
+    private var data: JsonData
 
     var translatedText: String {
         return data.translations[0].translatedText

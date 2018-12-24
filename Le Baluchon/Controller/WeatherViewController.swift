@@ -14,42 +14,41 @@ class WeatherViewController: UIViewController {
 
         updateWeather()
     }
+    
+    @IBAction func refreshButtonPressed(_ sender: Any) {
+        updateWeather()
+    }
 
     func updateWeather() {
-        WeatherService().getWeather(for: .paris, callback: { (success, weather) in
+        descriptionParis.text = "PARIS (Mise à jour...)"
+        descriptionNewYork.text = "NEW-YORK (Mise à jour...)"
+        
+        WeatherService.shared.getWeather { (success, weather) in
             if success, let weather = weather {
-                self.tempParis.text = weather.temperature
+                self.tempParis.text = weather.getTemperature(for: .paris)
+                self.tempNewYork.text = weather.getTemperature(for: .newyork)
 
-                if let data = weather.getImage(forCode: weather.code) {
+                if let data = weather.getWeatherImage(for: .paris) {
                     self.imageParis.image = UIImage(data: data)
                 }
 
-                self.descriptionParis.text = "PARIS (le " + weather.date + ")"
+                if let data = weather.getWeatherImage(for: .newyork) {
+                    self.imageNewYork.image = UIImage(data: data)
+                }
+
+                self.descriptionParis.text = "PARIS (le " + weather.getDate(for: .paris) + ")"
+                self.descriptionNewYork.text = "NEW-YORK (le " + weather.getDate(for: .newyork) + ")"
 
             } else {
                 self.tempParis.text = "?"
                 self.descriptionParis.text = "PARIS (Problème de connexion)"
-            }
-        })
-
-        WeatherService().getWeather(for: .newyork, callback: { (success, weather) in
-            if success, let weather = weather {
-                self.tempNewYork.text = weather.temperature
-
-                if let data = weather.getImage(forCode: weather.code) {
-                    self.imageNewYork.image = UIImage(data: data)
-                }
-
-                self.descriptionNewYork.text = "NEW-YORK (le " + weather.date + ")"
-
-            } else {
                 self.tempNewYork.text = "?"
                 self.descriptionNewYork.text = "NEW-YORK (Problème de connexion)"
             }
-        })
+        }
     }
 
-    // white status bar
+    // white status bar functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()

@@ -1,28 +1,22 @@
 import Foundation
 
 class WeatherService {
-    /*
+    // singleton pattern
     static var shared = WeatherService()
     private init() {}
- */
-
-    enum City: String {
-        case paris = "615702"
-        case newyork = "2459115"
-    }
 
     private let queryUrl = URL(string: "https://query.yahooapis.com/v1/public/yql?")!
     private var task: URLSessionDataTask!
 
     private var weatherSession = URLSession.init(configuration: .default)
-/*
+
     init(weatherSession: URLSession) {
         self.weatherSession = weatherSession
     }
- */
 
-    func getWeather(for city: City, callback: @escaping (Bool, Weather?) -> Void) {
-        let request = createRequest(for: city)
+    // API request
+    func getWeather(callback: @escaping (Bool, Weather?) -> Void) {
+        let request = createRequest()
 
         task?.cancel()
         task = weatherSession.dataTask(with: request) { (data, response, error) in
@@ -43,18 +37,17 @@ class WeatherService {
                 } catch {
                     callback(false, nil)
                 }
-
             }
         }
         task?.resume()
     }
 
-    private func createRequest(for city: City) -> URLRequest {
+    private func createRequest() -> URLRequest {
         var request = URLRequest(url: queryUrl)
         request.httpMethod = "POST"
 
-        var body = "q=select item.condition from weather.forecast where woeid = " + city.rawValue + " and u='c'"
-        body += "&format=json&env=store://datatables.org/alltableswithkeys"
+        var body = "q=select item.condition from weather.forecast where woeid in (615702, 2459115) and u='c'"
+        body += "&format=json"
         request.httpBody = body.data(using: .utf8)
         return request
     }

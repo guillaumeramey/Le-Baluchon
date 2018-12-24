@@ -1,0 +1,31 @@
+{
+    "query": {
+        "count": 2,
+        "created": "2018-12-23T04:45:09Z",
+        "lang": "en-US",
+        "results": {
+            "channel": [
+                {
+                    "item": {
+                        "condition": {
+                            "code": "26",
+                            "date": "Sun, 23 Dec 2018 05:00 AM CET",
+                            "temp": "49",
+                            "text": "Cloudy"
+                        }
+                    }
+                },
+                {
+                    "item": {
+                        "condition": {
+                            "code": "31",
+                            "date": "Sat, 22 Dec 2018 11:00 PM EST",
+                            "temp": "41",
+                            "text": "Clear"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}
