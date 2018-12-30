@@ -48,12 +48,12 @@ struct Change: Decodable {
             guard let currencyRate = rates[sourceCurrency.rawValue] else {
                 return ""
             }
-            return String(format: "%.2f", amountFloat * 1 / currencyRate)
+            return String(format: "%.3f", amountFloat * 1 / currencyRate)
         } else {
             guard let currencyRate = rates[targetCurrency.rawValue] else {
                 return ""
             }
-            return String(format: "%.2f", amountFloat * currencyRate)
+            return String(format: "%.3f", amountFloat * currencyRate)
         }
     }
 }

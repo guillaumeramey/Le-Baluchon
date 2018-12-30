@@ -40,13 +40,13 @@ class ChangeViewController: UIViewController {
                 }
             } else {
                 self.rateUpToDate.text = "Mise à jour impossible"
-                self.presentAlert()
+                self.alert(with: "Impossible de mettre à jour le taux de change")
             }
         }
     }
 
     @IBAction func refreshButtonPressed(_ sender: Any) {
-        updateRates()
+        ChangeService.shared.isUpdateNeeded ? updateRates() : alert(with: "Le taux de change est déjà à jour.")
     }
 
     @IBAction func amountEdited(_ sender: UITextField) {
@@ -77,19 +77,12 @@ class ChangeViewController: UIViewController {
     }
 
     // error alert
-    private func presentAlert() {
-        let alertVC = UIAlertController(title: "Erreur", message: "Impossible de mettre à jour le taux de change", preferredStyle: .alert)
+    private func alert(with message: String) {
+        let alertVC = UIAlertController(title: "Alerte", message: message, preferredStyle: .alert)
         let actionOk = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alertVC.addAction(actionOk)
-        let actionRetry = UIAlertAction(title: "Réessayer", style: .default, handler: retryHandler)
-        alertVC.addAction(actionRetry)
         present(alertVC, animated: true, completion: nil)
     }
-
-    private func retryHandler(alert: UIAlertAction!) {
-        updateRates()
-    }
-
 
     // white status bar functions
     override func viewWillAppear(_ animated: Bool) {

@@ -8,8 +8,27 @@ class ChangeService {
     private let apiUrl = "http://data.fixer.io/api/latest"
     private let apiKey = valueForAPIKey("fixer")
 
-    private var task: URLSessionDataTask!
+    // Store the last update in the user defaults
+    private struct Keys {
+        static let rateslastUpdate = "ratesLastUpdate"
+    }
+    private static var lastUpdate: Date? {
+        get {
+            return UserDefaults.standard.object(forKey: Keys.rateslastUpdate) as? Date
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: Keys.rateslastUpdate)
+        }
+    }
+    // Compare the last update with the current day
+    var isUpdateNeeded: Bool {
+        if let lastUpdate = ChangeService.lastUpdate {
+            return !Calendar.current.isDate(Date(), equalTo: lastUpdate, toGranularity: .day)
+        }
+        return true
+    }
 
+    private var task: URLSessionDataTask!
     private var changeSession = URLSession.init(configuration: .default)
 
     init(changeSession: URLSession) {
@@ -40,6 +59,7 @@ class ChangeService {
 
                 do {
                     let change = try JSONDecoder().decode(Change.self, from: data)
+                    ChangeService.lastUpdate = Date()
                     callback(true, change)
                 } catch {
                     callback(false, nil)
