@@ -159,7 +159,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="93.599999999999994" y="-826.23688155922048"/>
+            <point key="canvasLocation" x="93.599999999999994" y="-826.84729064039414"/>
         </scene>
         <!--Weather-->
         <scene sceneID="wg7-f3-ORb">
@@ -315,12 +315,12 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Météo" image="sun" id="cPa-gy-q4n"/>
                     <connections>
-                        <outlet property="descriptionNewYork" destination="jGL-kU-Pmo" id="yDa-ds-Vrk"/>
-                        <outlet property="descriptionParis" destination="t6n-sV-MXf" id="JRi-1S-aeA"/>
-                        <outlet property="imageNewYork" destination="xgT-0Q-0eP" id="Jsd-t9-Ud9"/>
-                        <outlet property="imageParis" destination="9Sx-72-0bm" id="xPC-Yr-K9F"/>
-                        <outlet property="tempNewYork" destination="fh7-Al-EpI" id="IoH-jL-xbp"/>
-                        <outlet property="tempParis" destination="EbI-NN-GbM" id="Vja-fi-VhO"/>
+                        <outletCollection property="citiesDescription" destination="t6n-sV-MXf" collectionClass="NSMutableArray" id="vwX-cH-Z8N"/>
+                        <outletCollection property="citiesDescription" destination="jGL-kU-Pmo" collectionClass="NSMutableArray" id="fmp-4n-1zm"/>
+                        <outletCollection property="citiesWeatherImage" destination="9Sx-72-0bm" collectionClass="NSMutableArray" id="6bA-No-msg"/>
+                        <outletCollection property="citiesWeatherImage" destination="xgT-0Q-0eP" collectionClass="NSMutableArray" id="iU0-DH-V8d"/>
+                        <outletCollection property="citiesTemperature" destination="EbI-NN-GbM" collectionClass="NSMutableArray" id="FkA-zQ-VPT"/>
+                        <outletCollection property="citiesTemperature" destination="fh7-Al-EpI" collectionClass="NSMutableArray" id="FoO-EH-1qt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>

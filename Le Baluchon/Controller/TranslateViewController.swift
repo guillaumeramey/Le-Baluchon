@@ -73,7 +73,7 @@ class TranslateViewController: UIViewController {
         present(alertVC, animated: true, completion: nil)
     }
 
-    // white status bar functions
+    // MARK: - White status bar
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()

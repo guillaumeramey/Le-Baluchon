@@ -17,15 +17,14 @@ class WeatherServiceTestCase: XCTestCase {
             XCTAssertTrue(success)
             XCTAssertNotNil(weather)
 
-            let dateParis = "23 décembre 2018 à 05:00"
-            let tempParis = "49°"
-            let dateNewYork = "22 décembre 2018 à 23:00"
-            let tempNewYork = "41°"
+            let dateParis = "(le 23 décembre 2018 à 05:00)"
+            let tempParis = "49"
 
-            XCTAssertEqual(dateParis, weather!.getDate(for: .paris))
-            XCTAssertEqual(tempParis, weather!.getTemperature(for: .paris))
-            XCTAssertEqual(dateNewYork, weather!.getDate(for: .newyork))
-            XCTAssertEqual(tempNewYork, weather!.getTemperature(for: .newyork))
+            paris.date = weather?.query.results.channel[0].item.condition.dateFormatted
+            paris.temperature = (weather?.query.results.channel[0].item.condition.temp)!
+
+            XCTAssertEqual(dateParis, paris.displayDate)
+            XCTAssertEqual(tempParis, paris.temperature)
 
             expectation.fulfill()
         }

@@ -2,53 +2,63 @@ import UIKit
 
 class WeatherViewController: UIViewController {
 
-    @IBOutlet weak var tempParis: UILabel!
-    @IBOutlet weak var tempNewYork: UILabel!
-    @IBOutlet weak var imageParis: UIImageView!
-    @IBOutlet weak var imageNewYork: UIImageView!
-    @IBOutlet weak var descriptionParis: UILabel!
-    @IBOutlet weak var descriptionNewYork: UILabel!
-    
+    // MARK: - Outlets
+    @IBOutlet var citiesDescription: [UILabel]!
+    @IBOutlet var citiesTemperature: [UILabel]!
+    @IBOutlet var citiesWeatherImage: [UIImageView]!
+
+    // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
 
         updateWeather()
     }
-    
-    @IBAction func refreshButtonPressed(_ sender: Any) {
-        updateWeather()
-    }
 
     func updateWeather() {
-        descriptionParis.text = "PARIS (Mise à jour...)"
-        descriptionNewYork.text = "NEW-YORK (Mise à jour...)"
+
+        for (index, element) in citiesDescription.enumerated() {
+            element.text = cities[index].name + " (Mise à jour...)"
+        }
+
+        for city in citiesTemperature {
+            city.text = "--"
+        }
         
         WeatherService.shared.getWeather { (success, weather) in
             if success, let weather = weather {
-                self.tempParis.text = weather.getTemperature(for: .paris)
-                self.tempNewYork.text = weather.getTemperature(for: .newyork)
 
-                if let data = weather.getWeatherImage(for: .paris) {
-                    self.imageParis.image = UIImage(data: data)
+                for (index, element) in cities.enumerated() {
+                    element.date = weather.query.results.channel[index].item.condition.dateFormatted
+                    element.temperature = weather.query.results.channel[index].item.condition.temp + "°"
+                    element.code = weather.query.results.channel[index].item.condition.code
                 }
 
-                if let data = weather.getWeatherImage(for: .newyork) {
-                    self.imageNewYork.image = UIImage(data: data)
+                for (index, element) in self.citiesTemperature.enumerated() {
+                    element.text = cities[index].temperature
                 }
 
-                self.descriptionParis.text = "PARIS (le " + weather.getDate(for: .paris) + ")"
-                self.descriptionNewYork.text = "NEW-YORK (le " + weather.getDate(for: .newyork) + ")"
+                for (index, element) in self.citiesWeatherImage.enumerated() {
+                    element.image = cities[index].weatherImage
+                }
+
+                for (index, element) in self.citiesDescription.enumerated() {
+                    element.text = cities[index].name + " " + cities[index].displayDate
+                }
 
             } else {
-                self.tempParis.text = "?"
-                self.descriptionParis.text = "PARIS (Problème de connexion)"
-                self.tempNewYork.text = "?"
-                self.descriptionNewYork.text = "NEW-YORK (Problème de connexion)"
+                for (index, element) in self.citiesDescription.enumerated() {
+                    element.text = cities[index].name + " (Problème de connexion)"
+                }
             }
         }
     }
 
-    // white status bar functions
+    // MARK: - Actions
+    @IBAction func refreshButtonPressed(_ sender: Any) {
+        updateWeather()
+    }
+
+    // MARK: - White status bar
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNeedsStatusBarAppearanceUpdate()
