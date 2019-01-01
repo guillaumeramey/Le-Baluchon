@@ -18,8 +18,6 @@ class ChangeViewController: UIViewController {
         updateRates()
 
         topView = currencies[0]
-
-        createClearButtons()
     }
 
     // API request to update currencies rates
@@ -83,16 +81,6 @@ class ChangeViewController: UIViewController {
         alertVC.addAction(actionOk)
         present(alertVC, animated: true, completion: nil)
     }
-
-    // MARK: - White status bar
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.setNeedsStatusBarAppearanceUpdate()
-    }
-
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        return .lightContent
-    }
 }
 
 // MARK: - Keyboard
@@ -100,29 +88,6 @@ extension ChangeViewController: UITextFieldDelegate {
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         for amount in amounts {
             amount.resignFirstResponder()
-        }
-    }
-
-    // creates a white clear button in the keyboard for all textfields
-    private func createClearButtons() {
-        for amount in amounts {
-            let height = amount.bounds.height / 3
-            let width = height + 10
-            let rect = CGRect(x: 0, y: 0, width: width, height: height)
-
-            let clearButton = UIButton(frame: rect)
-            clearButton.setImage(UIImage(named: "clear button white"), for: .normal)
-            clearButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-            clearButton.addTarget(self, action: #selector(clearButtonPressed), for: .touchUpInside)
-
-            amount.rightView = clearButton
-            amount.rightViewMode = .whileEditing
-        }
-    }
-
-    @objc private func clearButtonPressed(sender: UIButton) {
-        for amount in amounts {
-            amount.text = ""
         }
     }
 }

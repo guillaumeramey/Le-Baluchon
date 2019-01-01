@@ -14,7 +14,7 @@ class WeatherViewController: UIViewController {
         updateWeather()
     }
 
-    func updateWeather() {
+    private func updateWeather() {
 
         for (index, element) in citiesDescription.enumerated() {
             element.text = cities[index].name + " (Mise à jour...)"
@@ -60,15 +60,5 @@ class WeatherViewController: UIViewController {
     // MARK: - Actions
     @IBAction func refreshButtonPressed(_ sender: Any) {
         updateWeather()
-    }
-
-    // MARK: - White status bar
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.setNeedsStatusBarAppearanceUpdate()
-    }
-
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        return .lightContent
     }
 }

@@ -72,16 +72,6 @@ class TranslateViewController: UIViewController {
         alertVC.addAction(actionOk)
         present(alertVC, animated: true, completion: nil)
     }
-
-    // MARK: - White status bar
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.setNeedsStatusBarAppearanceUpdate()
-    }
-
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        return .lightContent
-    }
 }
 
 // MARK: - Keyboard
@@ -101,7 +91,7 @@ extension TranslateViewController: UITextViewDelegate {
         clearButton.isHidden = false
         if userText.textColor == UIColor.lightGray {
             userText.text = nil
-            userText.textColor = UIColor.white
+            userText.textColor = UIColor.black
         }
     }
 
