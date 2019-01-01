@@ -23,6 +23,10 @@ class WeatherViewController: UIViewController {
         for city in citiesTemperature {
             city.text = "--"
         }
+
+        for city in citiesWeatherImage {
+            city.image = nil
+        }
         
         WeatherService.shared.getWeather { (success, weather) in
             if success, let weather = weather {

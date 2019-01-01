@@ -35,11 +35,7 @@ struct Condition: Decodable {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "E, dd MMM y hh:mm a"
 
-        guard let date = dateFormatter.date(from: dateString) else {
-            return nil
-        }
-
-        return date
+        return dateFormatter.date(from: dateString) ?? nil
     }
 }
 

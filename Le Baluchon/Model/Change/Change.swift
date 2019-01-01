@@ -12,26 +12,17 @@ struct Change: Decodable {
     // formats the date for display
     var dateFormatted: String {
         let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "y-M-d"
+
+        guard let date = dateFormatter.date(from: date) else {
+            return "Impossible de formater la date"
+        }
+
         dateFormatter.dateStyle = .long
         dateFormatter.timeStyle = .none
         dateFormatter.locale = Locale(identifier: "FR-fr")
 
-        guard let date = formatDate() else {
-            return "Impossible de formater la date"
-        }
-
         return dateFormatter.string(from: date)
-    }
-
-    private func formatDate() -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "y-M-d"
-
-        guard let date = dateFormatter.date(from: date) else {
-            return nil
-        }
-
-        return date
     }
 
     // converts an amount from a currency to another

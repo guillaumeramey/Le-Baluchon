@@ -55,7 +55,7 @@ class City {
     }
 
     // returns true if it's daytime in the city
-    var isDaytime: Bool {
+    private var isDaytime: Bool {
         guard let date = date else {
             return true
         }
