@@ -1,33 +1,25 @@
+//
+//  WeatherTableViewController.swift
+//  Le Baluchon
+//
+//  Created by Guillaume Ramey on 02/01/2019.
+//  Copyright © 2019 Guillaume Ramey. All rights reserved.
+//
+
 import UIKit
 
-class WeatherViewController: UIViewController {
+class WeatherTableViewController: UIViewController {
 
     // MARK: - Outlets
-    @IBOutlet var citiesDescription: [UILabel]!
-    @IBOutlet var citiesTemperature: [UILabel]!
-    @IBOutlet var citiesWeatherImage: [UIImageView]!
+    @IBOutlet weak var tableView: UITableView!
 
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-
         updateWeather()
     }
 
     private func updateWeather() {
-
-        for (index, element) in citiesDescription.enumerated() {
-            element.text = cities[index].name + " (Mise à jour...)"
-        }
-
-        for city in citiesTemperature {
-            city.text = "--"
-        }
-
-        for city in citiesWeatherImage {
-            city.image = nil
-        }
-        
         WeatherService.shared.getWeather { (success, weather) in
             if success, let weather = weather {
 
@@ -37,22 +29,10 @@ class WeatherViewController: UIViewController {
                     element.code = weather.query.results.channel[index].item.condition.code
                 }
 
-                for (index, element) in self.citiesTemperature.enumerated() {
-                    element.text = cities[index].temperature
-                }
-
-                for (index, element) in self.citiesWeatherImage.enumerated() {
-                    element.image = cities[index].weatherImage
-                }
-
-                for (index, element) in self.citiesDescription.enumerated() {
-                    element.text = cities[index].name + " " + cities[index].displayDate
-                }
+                self.tableView.reloadData()
 
             } else {
-                for (index, element) in self.citiesDescription.enumerated() {
-                    element.text = cities[index].name + " (Problème de connexion)"
-                }
+
             }
         }
     }
@@ -60,5 +40,25 @@ class WeatherViewController: UIViewController {
     // MARK: - Actions
     @IBAction func refreshButtonPressed(_ sender: Any) {
         updateWeather()
+    }
+}
+
+// MARK: - Table view data source
+extension WeatherTableViewController: UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cities.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cityCell", for: indexPath) as? CityCell else {
+            return UITableViewCell()
+        }
+        cell.background.image = cities[indexPath.row].background
+        cell.temperature.text = cities[indexPath.row].temperature
+        cell.conditionImage.image = cities[indexPath.row].weatherImage
+        cell.cityDescription.text = cities[indexPath.row].name + " " + cities[indexPath.row].displayDate
+
+        return cell
     }
 }

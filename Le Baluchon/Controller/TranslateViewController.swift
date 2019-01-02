@@ -2,17 +2,16 @@ import UIKit
 import AVFoundation
 
 class TranslateViewController: UIViewController {
-
+    
     // MARK: - Properties
     private var sourceLanguage: Language!
     private var targetLanguage: Language!
 
     // MARK: - Outlets
+    @IBOutlet var languages: [UILabel]!
     @IBOutlet weak var userText: UITextView!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var translatedText: UITextView!
-    @IBOutlet weak var frenchLanguageLabel: UILabel!
-    @IBOutlet weak var englishLanguageLabel: UILabel!
     @IBOutlet weak var translateActivityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
@@ -28,23 +27,16 @@ class TranslateViewController: UIViewController {
 
         clearButton.isHidden = true
 
-        translateActivityIndicator.isHidden = true
-
-        toggleLanguage(self)
+        sourceLanguage = .french
+        targetLanguage = .english
     }
 
     // switch source and target languages
     @IBAction func toggleLanguage(_ sender: Any) {
-        if sourceLanguage == .french {
-            sourceLanguage = .english
-            targetLanguage = .french
-        } else {
-            sourceLanguage = .french
-            targetLanguage = .english
-        }
+        (sourceLanguage, targetLanguage) = (targetLanguage, sourceLanguage)
 
         UIView.beginAnimations(nil, context: nil)
-        (frenchLanguageLabel.frame.origin, englishLanguageLabel.frame.origin) = (englishLanguageLabel.frame.origin, frenchLanguageLabel.frame.origin)
+        (languages[0].frame.origin, languages[1].frame.origin) = (languages[1].frame.origin, languages[0].frame.origin)
         UIView.commitAnimations()
     }
 
@@ -52,16 +44,15 @@ class TranslateViewController: UIViewController {
     @IBAction func translate(_ sender: Any) {
         userText.resignFirstResponder()
         translatedText.text = ""
-        translateActivityIndicator.isHidden = false
+        translateActivityIndicator.startAnimating()
 
         TranslateService.shared.translate(userText.text, from: sourceLanguage, to: targetLanguage, callback: { (success, translation) in
             if success, let translation = translation {
-                self.translateActivityIndicator.isHidden = true
                 self.translatedText.text = translation.translatedText
             } else {
-                self.translateActivityIndicator.isHidden = true
                 self.presentAlert()
             }
+            self.translateActivityIndicator.stopAnimating()
         })
     }
 

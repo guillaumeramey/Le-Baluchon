@@ -8,8 +8,8 @@
 
 import UIKit
 
-let paris = City(name: "PARIS", woeid: "615702")
-let newYork = City(name: "NEW-YORK", woeid: "2459115")
+let paris = City(name: "PARIS", woeid: "615702", background: "paris_background")
+let newYork = City(name: "NEW-YORK", woeid: "2459115", background: "newyork_background")
 
 let cities = [paris, newYork]
 
@@ -19,10 +19,12 @@ class City {
     var date: Date?
     var code = ""
     var temperature = "?"
+    var background: UIImage?
 
-    init(name: String, woeid: String) {
+    init(name: String, woeid: String, background: String) {
         self.name = name
         self.woeid = woeid
+        self.background = UIImage(named: background) ?? nil
     }
 
     // Formats the date for display

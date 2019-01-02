@@ -18,6 +18,7 @@ class ChangeViewController: UIViewController {
         updateRates()
 
         topView = currencies[0]
+
     }
 
     // API request to update currencies rates
