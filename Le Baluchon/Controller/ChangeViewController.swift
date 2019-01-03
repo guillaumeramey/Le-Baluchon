@@ -11,18 +11,22 @@ class ChangeViewController: UIViewController {
     @IBOutlet weak var rateUpToDate: UILabel!
     @IBOutlet var currencies: [UIStackView]!
     @IBOutlet var amounts: [UITextField]!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var updateAI: UIActivityIndicatorView!
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         updateRates()
 
         topView = currencies[0]
-
     }
 
     // API request to update currencies rates
     private func updateRates() {
+        refreshButton.isEnabled = false
+        refreshButton.tintColor = UIColor.white
+        updateAI.startAnimating()
         for amount in amounts {
             amount.isEnabled = false
         }
@@ -41,11 +45,18 @@ class ChangeViewController: UIViewController {
                 self.rateUpToDate.text = "Mise à jour impossible"
                 self.alert(with: "Impossible de mettre à jour le taux de change")
             }
+            self.updateAI.stopAnimating()
+            self.refreshButton.tintColor = UIColor.darkText
+            self.refreshButton.isEnabled = true
         }
     }
 
     @IBAction func refreshButtonPressed(_ sender: Any) {
-        ChangeService.shared.isUpdateNeeded ? updateRates() : alert(with: "Le taux de change est déjà à jour.")
+        if ChangeService.shared.isUpdateNeeded {
+            updateRates()
+        } else {
+            alert(with: "Le taux de change est déjà à jour.")
+        }
     }
 
     @IBAction func amountEdited(_ sender: UITextField) {

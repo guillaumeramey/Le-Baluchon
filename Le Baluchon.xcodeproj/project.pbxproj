@@ -184,7 +184,6 @@
 			isa = PBXGroup;
 			children = (
 				A4E5325B21C2686D006E1639 /* Main.storyboard */,
-				A406F39A21DD120700C72095 /* CityCell.swift */,
 				A4E5325E21C2686F006E1639 /* Assets.xcassets */,
 				A4E5326021C2686F006E1639 /* LaunchScreen.storyboard */,
 			);
@@ -197,6 +196,7 @@
 				A4E5327821C26A41006E1639 /* TranslateViewController.swift */,
 				A4E5325721C2686D006E1639 /* ChangeViewController.swift */,
 				A406F39821DD10DB00C72095 /* WeatherViewController.swift */,
+				A406F39A21DD120700C72095 /* CityCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

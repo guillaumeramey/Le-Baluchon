@@ -15,16 +15,34 @@ let cities = [paris, newYork]
 
 class City {
     var name: String
+    var caption: String
     var woeid: String
-    var date: Date?
-    var code = ""
-    var temperature = "?"
     var background: UIImage?
+    var date: Date? = nil
+    var temperature = ""
+    var conditionCode: String? = nil
+    var conditionImage: UIImage? {
+        if let code = conditionCode {
+            var urlString = "https://s.yimg.com/zz/combo?a/i/us/nws/weather/gr/"
+            urlString += code
+            urlString += isDaytime ? "d" : "n"
+            urlString += ".png"
+
+            do {
+                let data = try Data(contentsOf: URL(string: urlString)!)
+                return UIImage(data: data)
+            } catch {
+                return nil
+            }
+        }
+        return nil
+    }
 
     init(name: String, woeid: String, background: String) {
         self.name = name
         self.woeid = woeid
         self.background = UIImage(named: background) ?? nil
+        self.caption = name + " (Mise à jour...)"
     }
 
     // Formats the date for display
@@ -39,21 +57,6 @@ class City {
         }
 
         return "(le " + dateFormatter.string(from: date) + ")"
-    }
-
-    //gets an image describing the weather depending of the hour
-    var weatherImage: UIImage? {
-        var urlString = "https://s.yimg.com/zz/combo?a/i/us/nws/weather/gr/"
-        urlString += code
-        urlString += isDaytime ? "d" : "n"
-        urlString += ".png"
-
-        do {
-            let data = try Data(contentsOf: URL(string: urlString)!)
-            return UIImage(data: data)
-        } catch {
-            return nil
-        }
     }
 
     // returns true if it's daytime in the city

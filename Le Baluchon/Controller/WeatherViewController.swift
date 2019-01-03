@@ -12,6 +12,8 @@ class WeatherTableViewController: UIViewController {
 
     // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var updateAI: UIActivityIndicatorView!
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
 
     // MARK: - Methods
     override func viewDidLoad() {
@@ -20,21 +22,38 @@ class WeatherTableViewController: UIViewController {
     }
 
     private func updateWeather() {
+        startUpdating()
         WeatherService.shared.getWeather { (success, weather) in
             if success, let weather = weather {
-
                 for (index, element) in cities.enumerated() {
                     element.date = weather.query.results.channel[index].item.condition.dateFormatted
                     element.temperature = weather.query.results.channel[index].item.condition.temp + "°"
-                    element.code = weather.query.results.channel[index].item.condition.code
+                    element.conditionCode = weather.query.results.channel[index].item.condition.code
+                    element.caption = element.name + " " + element.displayDate
                 }
-
-                self.tableView.reloadData()
-
             } else {
-
+                for city in cities {
+                    city.caption = city.name + " (Problème de connexion)"
+                }
             }
+            self.endUpdating()
         }
+    }
+
+    private func startUpdating() {
+        refreshButton.isEnabled = false
+        refreshButton.tintColor = UIColor.white
+        updateAI.startAnimating()
+        for city in cities {
+            city.caption = city.name + " (Mise à jour...)"
+        }
+    }
+    
+    private func endUpdating() {
+        tableView.reloadData()
+        updateAI.stopAnimating()
+        refreshButton.tintColor = UIColor.darkText
+        refreshButton.isEnabled = true
     }
 
     // MARK: - Actions
@@ -56,8 +75,8 @@ extension WeatherTableViewController: UITableViewDataSource {
         }
         cell.background.image = cities[indexPath.row].background
         cell.temperature.text = cities[indexPath.row].temperature
-        cell.conditionImage.image = cities[indexPath.row].weatherImage
-        cell.cityDescription.text = cities[indexPath.row].name + " " + cities[indexPath.row].displayDate
+        cell.conditionImage.image = cities[indexPath.row].conditionImage
+        cell.caption.text = cities[indexPath.row].caption
 
         return cell
     }
