@@ -8,10 +8,15 @@
 
 import UIKit
 
-let paris = City(name: "PARIS", woeid: "615702", background: "paris_background")
-let newYork = City(name: "NEW-YORK", woeid: "2459115", background: "newyork_background")
+let paris = City(name: "PARIS", woeid: "615702", background: "paris", selected: true)
+let newYork = City(name: "NEW-YORK", woeid: "2459115", background: "newyork", selected: true)
+let bangkok = City(name: "BANGKOK", woeid: "1225448", background: "bangkok", selected: true)
+let tokyo = City(name: "TOKYO", woeid: "1118370", background: "tokyo", selected: true)
+let dubai = City(name: "DUBAI", woeid: "1940345", background: "dubai", selected: true)
+let rome = City(name: "ROME", woeid: "721943", background: "rome", selected: true)
+let istanbul = City(name: "ISTANBUL", woeid: "2347289", background: "istanbul", selected: true)
 
-let cities = [paris, newYork]
+let cities = [paris, newYork, bangkok, tokyo, dubai, rome, istanbul]
 
 class City {
     var name: String
@@ -37,12 +42,14 @@ class City {
         }
         return nil
     }
+    var selected: Bool
 
-    init(name: String, woeid: String, background: String) {
+    init(name: String, woeid: String, background: String, selected: Bool) {
         self.name = name
         self.woeid = woeid
         self.background = UIImage(named: background) ?? nil
         self.caption = name + " (Mise à jour...)"
+        self.selected = selected
     }
 
     // Formats the date for display

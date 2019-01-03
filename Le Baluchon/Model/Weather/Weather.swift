@@ -5,6 +5,7 @@ struct Weather: Decodable {
 }
 
 struct Query: Decodable {
+    let count: Int
     let results: Results
 }
 

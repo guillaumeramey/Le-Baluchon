@@ -46,7 +46,14 @@ class WeatherService {
         var request = URLRequest(url: queryUrl)
         request.httpMethod = "POST"
 
-        var body = "q=select item.condition from weather.forecast where woeid in (615702, 2459115) and u='c'"
+        var body = "q=select item.condition from weather.forecast where woeid in "
+        var firstCity = true
+        for city in cities {
+            body += firstCity ? "(" : ", "
+            firstCity = false
+            body += city.woeid
+        }
+        body += ") and u='c'"
         body += "&format=json"
         request.httpBody = body.data(using: .utf8)
         return request

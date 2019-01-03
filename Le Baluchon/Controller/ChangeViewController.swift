@@ -8,10 +8,9 @@ class ChangeViewController: UIViewController {
     private var topView: UIStackView!
 
     // MARK: - Outlets
-    @IBOutlet weak var rateUpToDate: UILabel!
+    @IBOutlet weak var lastUpdate: UILabel!
     @IBOutlet var currencies: [UIStackView]!
     @IBOutlet var amounts: [UITextField]!
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var updateAI: UIActivityIndicatorView!
     @IBOutlet weak var refreshButton: UIBarButtonItem!
 
@@ -24,31 +23,38 @@ class ChangeViewController: UIViewController {
 
     // API request to update currencies rates
     private func updateRates() {
-        refreshButton.isEnabled = false
-        refreshButton.tintColor = UIColor.white
-        updateAI.startAnimating()
-        for amount in amounts {
-            amount.isEnabled = false
-        }
-        self.rateUpToDate.text = "Mise à jour du taux de change..."
-        
+        startUpdating()
         ChangeService.shared.getRates { (success, change) in
             if success, let change = change {
                 self.change = change
-                self.rateUpToDate.text = "Mis à jour le " + change.dateFormatted
+                self.lastUpdate.text = "Mis à jour le " + change.dateFormatted
                 self.amounts[0].text = "1"
                 self.amounts[1].text =  change.convert(self.amounts[0].text, from: .euro, to: .dollarUS)
                 for amount in self.amounts {
                     amount.isEnabled = true
                 }
             } else {
-                self.rateUpToDate.text = "Mise à jour impossible"
+                self.lastUpdate.text = "Mise à jour impossible"
                 self.alert(with: "Impossible de mettre à jour le taux de change")
             }
-            self.updateAI.stopAnimating()
-            self.refreshButton.tintColor = UIColor.darkText
-            self.refreshButton.isEnabled = true
+            self.stopUpdating()
         }
+    }
+
+    private func startUpdating() {
+        refreshButton.isEnabled = false
+        refreshButton.tintColor = UIColor.white
+        updateAI.startAnimating()
+        for amount in amounts {
+            amount.isEnabled = false
+        }
+        lastUpdate.text = "Mise à jour du taux de change..."
+    }
+
+    private func stopUpdating() {
+        updateAI.stopAnimating()
+        refreshButton.tintColor = UIColor.darkText
+        refreshButton.isEnabled = true
     }
 
     @IBAction func refreshButtonPressed(_ sender: Any) {
