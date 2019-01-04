@@ -21,7 +21,7 @@
 		A438380F21D092C100F7CCC7 /* ChangeServiceTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A438380E21D092C100F7CCC7 /* ChangeServiceTestCase.swift */; };
 		A438381121D0A1AB00F7CCC7 /* WeatherServiceTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A438381021D0A1AB00F7CCC7 /* WeatherServiceTestCase.swift */; };
 		A443F87D21C8927900410D10 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A443F87C21C8927900410D10 /* WeatherService.swift */; };
-		A443F87F21C8936D00410D10 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = A443F87E21C8936D00410D10 /* Weather.swift */; };
+		A443F87F21C8936D00410D10 /* WeatherJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = A443F87E21C8936D00410D10 /* WeatherJSON.swift */; };
 		A443F88321C8DD8800410D10 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = A443F88221C8DD8800410D10 /* Language.swift */; };
 		A45A0C8621D8B49C00532EDF /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = A45A0C8421D8B49C00532EDF /* Keys.plist */; };
 		A45A0C8721D8B49C00532EDF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45A0C8521D8B49C00532EDF /* AppDelegate.swift */; };
@@ -62,7 +62,7 @@
 		A438380E21D092C100F7CCC7 /* ChangeServiceTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeServiceTestCase.swift; sourceTree = "<group>"; };
 		A438381021D0A1AB00F7CCC7 /* WeatherServiceTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherServiceTestCase.swift; sourceTree = "<group>"; };
 		A443F87C21C8927900410D10 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
-		A443F87E21C8936D00410D10 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		A443F87E21C8936D00410D10 /* WeatherJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherJSON.swift; sourceTree = "<group>"; };
 		A443F88221C8DD8800410D10 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		A45A0C8221D8B48D00532EDF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Le Baluchon/Supporting files/Info.plist"; sourceTree = SOURCE_ROOT; };
 		A45A0C8421D8B49C00532EDF /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Keys.plist; path = "Le Baluchon/Supporting files/Keys.plist"; sourceTree = SOURCE_ROOT; };
@@ -104,7 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				A443F87C21C8927900410D10 /* WeatherService.swift */,
-				A443F87E21C8936D00410D10 /* Weather.swift */,
+				A443F87E21C8936D00410D10 /* WeatherJSON.swift */,
 				A45A0C9021D9AFFB00532EDF /* City.swift */,
 			);
 			path = Weather;
@@ -330,7 +330,7 @@
 				A4D0B93721C38AAD0013E6A8 /* ChangeService.swift in Sources */,
 				A4D0B93921C396B50013E6A8 /* Change.swift in Sources */,
 				A406F3A021DDCAD000C72095 /* Currency.swift in Sources */,
-				A443F87F21C8936D00410D10 /* Weather.swift in Sources */,
+				A443F87F21C8936D00410D10 /* WeatherJSON.swift in Sources */,
 				A406F3A421DDDC2B00C72095 /* CitiesViewController.swift in Sources */,
 				A4E0347521C51B9500E78B53 /* Translation.swift in Sources */,
 				A4E5327921C26A41006E1639 /* TranslateViewController.swift in Sources */,

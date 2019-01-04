@@ -3,7 +3,7 @@ import XCTest
 
 class ChangeServiceTestCase: XCTestCase {
 
-    func testGetRatesShouldPostSuccessCallbackIfNoErrorAndCorrectData() {
+    func testGetRatesShouldPostSuccessCallbackIfNoErrorAndCorrectDataAndUpdateIsNotNeeded() {
         // Given
         let changeService = ChangeService(
             changeSession: URLSessionFake(
@@ -27,6 +27,8 @@ class ChangeServiceTestCase: XCTestCase {
         }
 
         wait(for: [expectation], timeout: 0.01)
+
+        XCTAssertFalse(ChangeService.shared.isUpdateNeeded)
     }
 
     func testGetRatesShouldPostFailedCallbackIfError() {

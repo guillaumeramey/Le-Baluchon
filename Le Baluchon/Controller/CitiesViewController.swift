@@ -8,43 +8,50 @@
 
 import UIKit
 
-class CitiesViewController: UITableViewController {
+class CitiesViewController: UIViewController {
+
+    @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
     }
 
-    // MARK: - Table view data source
-//
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 1
-//    }
+    @IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
+    }
+}
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return cities.count
+// MARK: - Table view data source
+extension CitiesViewController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
 
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return availableCities.count
+    }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cityCell", for: indexPath)
-        
-        let city = cities[indexPath.row]
+
+        let city = availableCities[indexPath.row]
         cell.textLabel?.text = city.name
         cell.accessoryType = city.selected ? .checkmark : .none
 
         return cell
     }
+}
 
-    // MARK: - Table view Delegate methods
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+// MARK: - Table view Delegate methods
+extension CitiesViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        cities[indexPath.row].selected.toggle()
+        availableCities[indexPath.row].selected.toggle()
         tableView.reloadData()
 
         dismiss(animated: true, completion: nil)
     }
-
 }

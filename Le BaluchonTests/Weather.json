@@ -1,31 +1,85 @@
 {
-    "query": {
-        "count": 2,
-        "created": "2018-12-23T04:45:09Z",
-        "lang": "en-US",
-        "results": {
-            "channel": [
+    "cnt": 2,
+    "list": [
+        {
+            "coord": {
+                "lon": 2.35,
+                "lat": 48.86
+            },
+            "sys": {
+                "type": 1,
+                "id": 6540,
+                "message": 0.0063,
+                "country": "FR",
+                "sunrise": 1546587826,
+                "sunset": 1546618047
+            },
+            "weather": [
                 {
-                    "item": {
-                        "condition": {
-                            "code": "26",
-                            "date": "Sun, 23 Dec 2018 05:00 AM CET",
-                            "temp": "49",
-                            "text": "Cloudy"
-                        }
-                    }
-                },
-                {
-                    "item": {
-                        "condition": {
-                            "code": "31",
-                            "date": "Sat, 22 Dec 2018 11:00 PM EST",
-                            "temp": "41",
-                            "text": "Clear"
-                        }
-                    }
+                    "id": 701,
+                    "main": "Mist",
+                    "description": "mist",
+                    "icon": "50n"
                 }
-            ]
+            ],
+            "main": {
+                "temp": 2,
+                "pressure": 1040,
+                "humidity": 93,
+                "temp_min": 1,
+                "temp_max": 3
+            },
+            "visibility": 7000,
+            "wind": {
+                "speed": 2.1,
+                "deg": 350
+            },
+            "clouds": {
+                "all": 90
+            },
+            "dt": 1546574105,
+            "id": 6455259,
+            "name": "Paris"
+        },
+        {
+            "coord": {
+                "lon": -75.5,
+                "lat": 43
+            },
+            "sys": {
+                "type": 1,
+                "id": 5681,
+                "message": 0.0223,
+                "country": "US",
+                "sunrise": 1546605204,
+                "sunset": 1546638046
+            },
+            "weather": [
+                {
+                    "id": 804,
+                    "main": "Clouds",
+                    "description": "overcast clouds",
+                    "icon": "04n"
+                }
+            ],
+            "main": {
+                "temp": 0.32,
+                "pressure": 1015,
+                "humidity": 78,
+                "temp_min": 0,
+                "temp_max": 0.6
+            },
+            "visibility": 16093,
+            "wind": {
+                "speed": 2.72,
+                "deg": 251.003
+            },
+            "clouds": {
+                "all": 90
+            },
+            "dt": 1546574105,
+            "id": 5128638,
+            "name": "New York"
         }
-    }
+    ]
 }

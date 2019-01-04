@@ -25,7 +25,7 @@ struct Change: Decodable {
         return dateFormatter.string(from: date)
     }
 
-    // converts an amount from a currency to another
+    // convert an amount from a currency to another
     func convert(_ amount: String?, from sourceCurrency: Currency, to targetCurrency: Currency) -> String {
         guard let amountString = amount else {
             return ""

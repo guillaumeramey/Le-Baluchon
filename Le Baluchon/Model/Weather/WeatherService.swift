@@ -5,7 +5,9 @@ class WeatherService {
     static var shared = WeatherService()
     private init() {}
 
-    private let queryUrl = URL(string: "https://query.yahooapis.com/v1/public/yql?")!
+    let apiUrl = "http://api.openweathermap.org/data/2.5/group?"
+    let apiKey = valueForAPIKey("openweather")
+
     private var task: URLSessionDataTask!
 
     private var weatherSession = URLSession.init(configuration: .default)
@@ -15,8 +17,14 @@ class WeatherService {
     }
 
     // API request
-    func getWeather(callback: @escaping (Bool, Weather?) -> Void) {
-        let request = createRequest()
+    func getWeather(for cities: [City], callback: @escaping (Bool, WeatherJSON?) -> Void) {
+
+        let requestUrl = apiUrl
+            + "id=" + cities.map {$0.id}.joined(separator: ",")
+            + "&units=metric"
+            + "&appid=" + apiKey
+
+        let request = URLRequest(url: URL(string: requestUrl)!)
 
         task?.cancel()
         task = weatherSession.dataTask(with: request) { (data, response, error) in
@@ -32,30 +40,13 @@ class WeatherService {
                 }
 
                 do {
-                    let weather = try JSONDecoder().decode(Weather.self, from: data)
-                    callback(true, weather)
+                    let weatherJSON = try JSONDecoder().decode(WeatherJSON.self, from: data)
+                    callback(true, weatherJSON)
                 } catch {
                     callback(false, nil)
                 }
             }
         }
         task?.resume()
-    }
-
-    private func createRequest() -> URLRequest {
-        var request = URLRequest(url: queryUrl)
-        request.httpMethod = "POST"
-
-        var body = "q=select item.condition from weather.forecast where woeid in "
-        var firstCity = true
-        for city in cities {
-            body += firstCity ? "(" : ", "
-            firstCity = false
-            body += city.woeid
-        }
-        body += ") and u='c'"
-        body += "&format=json"
-        request.httpBody = body.data(using: .utf8)
-        return request
     }
 }
