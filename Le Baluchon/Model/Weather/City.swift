@@ -6,43 +6,32 @@
 //  Copyright © 2018 Guillaume Ramey. All rights reserved.
 //
 
+
+// US Cities backgrounds designes by Rwdd_studios - Freepik.com
+// Paris background designed by Freepik.com
+
+
 import UIKit
 
-let paris = City(name: "x", id: "6455259", background: "paris", selected: true)
-let newYork = City(name: "x", id: "5128638", background: "newyork", selected: true)
-let bangkok = City(name: "BANGKOK", id: "xxx", background: "bangkok", selected: false)
-let tokyo = City(name: "TOKYO", id: "xxx", background: "tokyo", selected: false)
-let dubai = City(name: "DUBAI", id: "xxx", background: "dubai", selected: false)
-let rome = City(name: "ROME", id: "xxx", background: "rome", selected: false)
-let istanbul = City(name: "ISTANBUL", id: "xxx", background: "istanbul", selected: false)
+let paris = City(name: "Paris", id: "6455259", background: "city_bg_paris", selected: true)
+let newYork = City(name: "New York", id: "5128581", background: "city_bg_newYork", selected: true)
+let chicago = City(name: "Chicago", id: "4887398", background: "city_bg_chicago", selected: false)
+let lasVegas = City(name: "Las Vegas", id: "5506956", background: "city_bg_lasVegas", selected: false)
+let losAngeles = City(name: "Los Angeles", id: "5368361", background: "city_bg_losAngeles", selected: false)
+let seattle = City(name: "Seattle", id: "5809844", background: "city_bg_seattle", selected: false)
+let washington = City(name: "Washington", id: "4366164", background: "city_bg_washington", selected: false)
 
-//let cities = [paris, newYork, bangkok, tokyo, dubai, rome, istanbul]
-let availableCities = [paris, newYork]
+let cities = [paris, newYork, chicago, lasVegas, losAngeles, seattle, washington]
 
 class City {
-    var name: String = ""
+    var name: String
     var caption: String
     var id: String
     var background: UIImage?
     var date: Date? = nil
     var temperature = ""
     var conditionCode: String? = nil
-    var conditionImage: UIImage? {
-        if let code = conditionCode {
-            var urlString = "https://s.yimg.com/zz/combo?a/i/us/nws/weather/gr/"
-            urlString += code
-            urlString += isDaytime ? "d" : "n"
-            urlString += ".png"
-
-            do {
-                let data = try Data(contentsOf: URL(string: urlString)!)
-                return UIImage(data: data)
-            } catch {
-                return nil
-            }
-        }
-        return nil
-    }
+    var conditionImage: UIImage? = nil
     var selected: Bool
 
     init(name: String, id: String, background: String, selected: Bool) {
@@ -65,16 +54,5 @@ class City {
         }
 
         return "(le " + dateFormatter.string(from: date) + ")"
-    }
-
-    // returns true if it's daytime in the city
-    private var isDaytime: Bool {
-        guard let date = date else {
-            return true
-        }
-
-        let hour = Calendar.current.component(.hour, from: date)
-
-        return hour >= 7 && hour <= 21 ? true : false
     }
 }

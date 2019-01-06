@@ -12,31 +12,21 @@ class CitiesViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-    }
-
     @IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }
 
 // MARK: - Table view data source
 extension CitiesViewController: UITableViewDataSource {
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return availableCities.count
+        return cities.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cityCell", for: indexPath)
 
-        let city = availableCities[indexPath.row]
+        let city = cities[indexPath.row]
         cell.textLabel?.text = city.name
         cell.accessoryType = city.selected ? .checkmark : .none
 
@@ -49,9 +39,7 @@ extension CitiesViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        availableCities[indexPath.row].selected.toggle()
+        cities[indexPath.row].selected.toggle()
         tableView.reloadData()
-
-        dismiss(animated: true, completion: nil)
     }
 }
