@@ -16,7 +16,7 @@ let dubai = City(name: "DUBAI", woeid: "1940345", background: "dubai", selected:
 let rome = City(name: "ROME", woeid: "721943", background: "rome", selected: true)
 let istanbul = City(name: "ISTANBUL", woeid: "2347289", background: "istanbul", selected: true)
 
-let cities = [paris, newYork, bangkok, tokyo, dubai, rome, istanbul]
+let availableCities = [paris, newYork, bangkok, dubai, istanbul, rome, tokyo]
 
 class City {
     var name: String

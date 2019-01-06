@@ -47,13 +47,8 @@ class WeatherService {
         request.httpMethod = "POST"
 
         var body = "q=select item.condition from weather.forecast where woeid in "
-        var firstCity = true
-        for city in cities {
-            body += firstCity ? "(" : ", "
-            firstCity = false
-            body += city.woeid
-        }
-        body += ") and u='c'"
+        body += "(" + availableCities.map {$0.woeid}.joined(separator: ",") + ") "
+        body += "and u='c'"
         body += "&format=json"
         request.httpBody = body.data(using: .utf8)
         return request

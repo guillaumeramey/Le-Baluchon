@@ -10,7 +10,9 @@ import UIKit
 
 class WeatherViewController: UIViewController {
 
-    var selectedCities: [City]!
+    var cities: [City] {
+        return availableCities.filter { $0.selected }
+    }
 
     // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
@@ -21,31 +23,28 @@ class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        selectedCities = [City]()
-
-        for city in cities where city.selected {
-            selectedCities.append(city)
-        }
         updateWeather()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super .viewWillAppear(animated)
+
+        tableView.reloadData()
     }
 
     private func updateWeather() {
         startUpdating()
         WeatherService.shared.getWeather { (success, weather) in
             if success, let weather = weather {
-
-                guard weather.query.count == cities.count else {
-                    fatalError("number of cities in query incorrect")
-                }
                 
-                for (index, element) in self.selectedCities.enumerated() {
-                    element.date = weather.query.results.channel[index].item.condition.dateFormatted
-                    element.temperature = weather.query.results.channel[index].item.condition.temp + "°"
-                    element.conditionCode = weather.query.results.channel[index].item.condition.code
-                    element.caption = element.name + " " + element.displayDate
+                for (index, city) in self.cities.enumerated() {
+                    city.date = weather.query.results.channel[index].item.condition.dateFormatted
+                    city.temperature = weather.query.results.channel[index].item.condition.temp + "°"
+                    city.conditionCode = weather.query.results.channel[index].item.condition.code
+                    city.caption = city.name + " " + city.displayDate
                 }
             } else {
-                for city in self.selectedCities {
+                for city in self.cities {
                     city.caption = city.name + " (Problème de connexion)"
                 }
             }
@@ -57,7 +56,7 @@ class WeatherViewController: UIViewController {
         refreshButton.isEnabled = false
         refreshButton.tintColor = UIColor.white
         updateAI.startAnimating()
-        for city in selectedCities {
+        for city in cities {
             city.caption = city.name + " (Mise à jour...)"
         }
     }
@@ -73,28 +72,23 @@ class WeatherViewController: UIViewController {
     @IBAction func refreshButtonPressed(_ sender: Any) {
         updateWeather()
     }
-
-    @IBAction func addButtonPressed(_ sender: Any) {
-
-    }
 }
 
 // MARK: - Table view data source
 extension WeatherViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return selectedCities.count
-//        return cities.filter({ $0.selected }).count
+        return cities.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cityCell", for: indexPath) as? CityCell else {
             return UITableViewCell()
         }
-        cell.background.image = selectedCities[indexPath.row].background
-        cell.temperature.text = selectedCities[indexPath.row].temperature
-        cell.conditionImage.image = selectedCities[indexPath.row].conditionImage
-        cell.caption.text = selectedCities[indexPath.row].caption
+        cell.background.image = cities[indexPath.row].background
+        cell.temperature.text = cities[indexPath.row].temperature
+        cell.conditionImage.image = cities[indexPath.row].conditionImage
+        cell.caption.text = cities[indexPath.row].caption
 
         return cell
     }
