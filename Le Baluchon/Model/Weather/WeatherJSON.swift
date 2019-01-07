@@ -31,7 +31,7 @@ struct WeatherJSON: Decodable {
 //        var main: String
 //        var description: String
 //        var icon: String
-        var weatherIcon: String {
+        var conditionImage: String {
             switch (id) {
             case 0...300:
                 return "wi_tstorm1"

@@ -19,10 +19,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchscreen" translatesAutoresizingMaskIntoConstraints="NO" id="gGK-hw-DOp">
-                                <rect key="frame" x="75" y="-178.5" width="225" height="1024"/>
+                                <rect key="frame" x="75" y="173" width="225" height="321"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="gGK-hw-DOp" secondAttribute="trailing" constant="75" id="3FT-N7-Avd"/>
                             <constraint firstItem="gGK-hw-DOp" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="75" id="XjN-PG-1hV"/>
@@ -38,6 +38,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="launchscreen" width="1024" height="1024"/>
+        <image name="launchscreen" width="413" height="321"/>
     </resources>
 </document>

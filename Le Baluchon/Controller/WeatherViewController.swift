@@ -38,7 +38,7 @@ class WeatherViewController: UIViewController {
                     city.temperature = "\(Int(weatherJSON.list[index].main.temp.rounded()))°"
                     city.date = weatherJSON.list[index].date
                     city.caption = city.name.uppercased() + " " + city.displayDate
-                    city.conditionImage = UIImage(named: weatherJSON.list[index].weather[0].weatherIcon)
+                    city.conditionImage = UIImage(named: weatherJSON.list[index].weather[0].conditionImage)
                 }
             } else {
                 for city in cities {
