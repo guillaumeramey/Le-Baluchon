@@ -13,22 +13,27 @@
 
 import UIKit
 
-class City {
+class City: Equatable {
+
     var name: String
     var caption: String
-    var id: String
+    var id: Int
     var background: UIImage?
     var date: Date? = nil
     var timeZone: TimeZone
     var temperature = ""
     var conditionImage: UIImage? = nil
 
-    init(name: String, id: String, background: String, timeZone: String) {
+    init(name: String, id: Int, background: String, timeZone: String) {
         self.name = name
         self.id = id
         self.background = UIImage(named: "city_bg_" + background) ?? nil
         self.caption = name.uppercased()
         self.timeZone = TimeZone(identifier: timeZone) ?? .current
+    }
+
+    static func == (lhs: City, rhs: City) -> Bool {
+        return lhs.id == rhs.id ? true : false
     }
 
     // Formats the date for display

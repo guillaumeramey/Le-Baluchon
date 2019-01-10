@@ -18,12 +18,15 @@ class WeatherServiceTestCase: XCTestCase {
             XCTAssertNotNil(weather)
 
             let temperature = "2"
+            let date = "(4 janvier 2019 à 04:55)"
             let conditionImage = UIImage(named: "wi_fog")
 
             paris.temperature = "\(Int((weather?.list[0].main.temp.rounded())!))"
+            paris.date = weather?.list[0].date
             paris.conditionImage = UIImage(named: weather!.list[0].weather[0].conditionImage)
 
             XCTAssertEqual(temperature, paris.temperature)
+            XCTAssertEqual(date, paris.displayDate)
             XCTAssertEqual(conditionImage, paris.conditionImage)
 
             expectation.fulfill()

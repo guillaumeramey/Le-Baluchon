@@ -80,13 +80,11 @@ extension CitiesViewController: UITableViewDelegate {
         if sourceIndexPath.section == 0 {
             movedCity = selectedCities.remove(at: sourceIndexPath.row)
         } else {
-            movedCity = availableCities.remove(at: sourceIndexPath.row)
+            movedCity = availableCities[sourceIndexPath.row]
         }
         
         if destinationIndexPath.section == 0 {
             selectedCities.insert(movedCity, at: destinationIndexPath.row)
-        } else {
-            availableCities.insert(movedCity, at: destinationIndexPath.row)
         }
     }
 }

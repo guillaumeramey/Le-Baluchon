@@ -28,9 +28,9 @@ class WeatherViewController: UIViewController {
 
     private func updateWeather() {
         startUpdating()
-        WeatherService.shared.getWeather(for: cities, callback: { (success, weatherJSON) in
+        WeatherService.shared.getWeather(for: allCities, callback: { (success, weatherJSON) in
             if success, let weatherJSON = weatherJSON {
-                for (index, city) in cities.enumerated() {
+                for (index, city) in allCities.enumerated() {
                     city.temperature = "\(Int(weatherJSON.list[index].main.temp.rounded()))°"
                     city.date = weatherJSON.list[index].date
                     city.caption = city.name.uppercased() + " " + city.displayDate
@@ -96,7 +96,7 @@ extension WeatherViewController: UITableViewDelegate {
     // create a swipe action to hide cells
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let hideAction = UIContextualAction(style: .normal, title: "Masquer") { (contextAction: UIContextualAction, sourceView: UIView, completionHandler: (Bool) -> Void) in
-            availableCities.append(selectedCities.remove(at: indexPath.row))
+            selectedCities.remove(at: indexPath.row)
             self.weatherTableView.reloadData()
         }
         hideAction.backgroundColor = UIColor(named: "Color_bar")

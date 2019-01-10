@@ -63,23 +63,23 @@
                                         <color key="color" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </activityIndicatorView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g2H-Kq-ixI">
-                                        <rect key="frame" x="364" y="166.66666666666666" width="30" height="24"/>
+                                        <rect key="frame" x="364" y="163.66666666666666" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="IzM-r9-Bfv"/>
+                                            <constraint firstAttribute="width" secondItem="g2H-Kq-ixI" secondAttribute="height" multiplier="1:1" id="ods-Hs-zh2"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="5" maxY="0.0"/>
-                                        <state key="normal" image="clear_btn"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="5" maxX="10" maxY="5"/>
+                                        <state key="normal" image="Button_clear"/>
                                         <connections>
                                             <action selector="clearButtonPressed:" destination="9pv-A4-QxB" eventType="touchUpInside" id="br5-xI-Ajq"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y3w-Kg-m6G">
-                                        <rect key="frame" x="364" y="432.66666666666669" width="30" height="23"/>
+                                        <rect key="frame" x="359" y="432.66666666666669" width="30" height="23"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="mYB-zu-Ops"/>
                                         </constraints>
-                                        <inset key="imageEdgeInsets" minX="-5" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" image="Button_speak">
                                             <color key="titleColor" name="Color_text"/>
                                         </state>
@@ -135,7 +135,7 @@
                                     <constraint firstItem="Bss-Vz-m42" firstAttribute="centerX" secondItem="DlW-7l-qzi" secondAttribute="centerX" id="uoN-4Q-yyq"/>
                                     <constraint firstItem="y3w-Kg-m6G" firstAttribute="centerY" secondItem="qIm-nc-oqZ" secondAttribute="centerY" id="wv4-6n-OSe"/>
                                     <constraint firstItem="qIm-nc-oqZ" firstAttribute="top" secondItem="Bss-Vz-m42" secondAttribute="bottom" constant="20" id="x9H-1b-3Y3"/>
-                                    <constraint firstItem="y3w-Kg-m6G" firstAttribute="trailing" secondItem="qIm-nc-oqZ" secondAttribute="trailing" id="yOe-wi-MlD"/>
+                                    <constraint firstItem="y3w-Kg-m6G" firstAttribute="trailing" secondItem="qIm-nc-oqZ" secondAttribute="trailing" constant="-5" id="yOe-wi-MlD"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -200,19 +200,19 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="city_bg_paris" translatesAutoresizingMaskIntoConstraints="NO" id="Yo4-Ig-NI5" userLabel="Backgound">
-                                                    <rect key="frame" x="10" y="55" width="300" height="100"/>
+                                                    <rect key="frame" x="10" y="55" width="394" height="131.33333333333334"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="Yo4-Ig-NI5" secondAttribute="height" multiplier="3:1" id="QRa-x2-EEW"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="PARIS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Uo5-sH-QbL">
-                                                    <rect key="frame" x="10" y="160" width="300" height="79.666666666666686"/>
+                                                    <rect key="frame" x="10" y="191.33333333333334" width="394" height="48.333333333333343"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="22"/>
                                                     <color key="textColor" name="Color_text"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24°" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JYq-x2-sfY">
-                                                    <rect key="frame" x="166" y="0.0" width="95" height="74"/>
+                                                    <rect key="frame" x="228.66666666666663" y="0.0" width="95" height="74"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="60"/>
                                                     <color key="textColor" name="Color_text"/>
                                                     <nil key="highlightedColor"/>
@@ -220,7 +220,7 @@
                                                     <size key="shadowOffset" width="2" height="2"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wi_shower3" translatesAutoresizingMaskIntoConstraints="NO" id="uyR-tj-IeF">
-                                                    <rect key="frame" x="42.666666666666657" y="5" width="128" height="128"/>
+                                                    <rect key="frame" x="74" y="5" width="128" height="128"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -325,7 +325,7 @@
                                 <items>
                                     <navigationItem title="Villes" id="ehB-ku-L8N">
                                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="a1V-5w-Zl7">
-                                            <color key="tintColor" name="Color_barText"/>
+                                            <color key="tintColor" name="Color_background"/>
                                             <connections>
                                                 <action selector="doneButtonPressed:" destination="hvt-3V-irS" id="uFd-hQ-YHh"/>
                                             </connections>
@@ -640,11 +640,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Button_clear" width="50" height="50"/>
         <image name="Button_speak" width="23" height="23"/>
         <image name="Button_toggle" width="52" height="52"/>
         <image name="Button_translate" width="122" height="52"/>
         <image name="city_bg_paris" width="464" height="152"/>
-        <image name="clear_btn" width="12" height="12"/>
         <image name="flag_EUR" width="50" height="50"/>
         <image name="flag_USD" width="50" height="50"/>
         <image name="speech_buble" width="30" height="30"/>
@@ -657,14 +657,8 @@
         <namedColor name="Color_background">
             <color red="0.8784313725490196" green="0.8784313725490196" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="Color_background">
-            <color red="0.8784313725490196" green="0.8784313725490196" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="Color_bar">
             <color red="0.36078431372549019" green="0.51764705882352946" blue="0.55686274509803924" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="Color_barText">
-            <color red="0.8784313725490196" green="0.8784313725490196" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Color_text">
             <color red="0.11372549019607843" green="0.13725490196078433" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

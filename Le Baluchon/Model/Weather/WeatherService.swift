@@ -20,7 +20,7 @@ class WeatherService {
     func getWeather(for cities: [City], callback: @escaping (Bool, WeatherJSON?) -> Void) {
 
         let requestUrl = apiUrl
-            + "id=" + cities.map {$0.id}.joined(separator: ",")
+            + "id=" + cities.map {"\($0.id)"}.joined(separator: ",")
             + "&units=metric"
             + "&appid=" + apiKey
 

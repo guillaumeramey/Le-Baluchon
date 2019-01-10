@@ -19,9 +19,13 @@ class ChangeServiceTestCase: XCTestCase {
 
             let rates: [String : Float] = ["USD": 1.138349]
             let formattedDate = "23 décembre 2018"
+            let amountFromEuroToDollar = change!.convert("1", from: Change.Currency.euro, to: Change.Currency.dollarUS)
+            let amountFromDollarToEuro = change!.convert("1", from: Change.Currency.dollarUS, to: Change.Currency.euro)
 
             XCTAssertEqual(rates, change!.rates)
             XCTAssertEqual(formattedDate, change!.dateFormatted)
+            XCTAssertEqual(amountFromEuroToDollar, "1.138")
+            XCTAssertEqual(amountFromDollarToEuro, "0.878")
 
             expectation.fulfill()
         }
