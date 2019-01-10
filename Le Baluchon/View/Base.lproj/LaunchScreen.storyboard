@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,7 +23,7 @@
                                 <rect key="frame" x="75" y="173" width="225" height="321"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" name="Color_background"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="gGK-hw-DOp" secondAttribute="trailing" constant="75" id="3FT-N7-Avd"/>
                             <constraint firstItem="gGK-hw-DOp" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="75" id="XjN-PG-1hV"/>
@@ -39,5 +40,8 @@
     </scenes>
     <resources>
         <image name="launchscreen" width="413" height="321"/>
+        <namedColor name="Color_background">
+            <color red="0.8784313725490196" green="0.8784313725490196" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

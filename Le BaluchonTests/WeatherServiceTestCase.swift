@@ -24,7 +24,7 @@ class WeatherServiceTestCase: XCTestCase {
             paris.conditionImage = UIImage(named: weather!.list[0].weather[0].conditionImage)
 
             XCTAssertEqual(temperature, paris.temperature)
-            XCTAssertEqual(weatherIcon, paris.conditionImage)
+            XCTAssertEqual(conditionImage, paris.conditionImage)
 
             expectation.fulfill()
         })

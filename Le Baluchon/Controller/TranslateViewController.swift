@@ -9,21 +9,29 @@ class TranslateViewController: UIViewController {
 
     // MARK: - Outlets
     @IBOutlet var languages: [UILabel]!
+    @IBOutlet var textViews: [UITextView]!
     @IBOutlet weak var userText: UITextView!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var translatedText: UITextView!
     @IBOutlet weak var translateActivityIndicator: UIActivityIndicatorView!
-    
+
+    // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
 
         userText.delegate = self
+
+        // text placeholder
         userText.text = "Saisissez du texte"
         userText.textColor = UIColor.lightGray
-        userText.layer.cornerRadius = 5.0
-        userText.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 30)
 
-        translatedText.layer.cornerRadius = 5.0
+        // apply design
+        for textView in textViews {
+            textView.layer.cornerRadius = 5.0
+            textView.layer.borderColor = UIColor(named: "Color_bar")!.cgColor
+            textView.layer.borderWidth = 1
+            textView.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 30)
+        }
 
         clearButton.isHidden = true
 
@@ -31,6 +39,14 @@ class TranslateViewController: UIViewController {
         targetLanguage = .english
     }
 
+    private func presentAlert() {
+        let alertVC = UIAlertController(title: "Vérifiez votre connexion", message: "Nous ne sommes pas parvenus à traduire le texte.", preferredStyle: .alert)
+        let actionOk = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alertVC.addAction(actionOk)
+        present(alertVC, animated: true, completion: nil)
+    }
+
+    // MARK: - Actions
     // switch source and target languages
     @IBAction func toggleLanguage(_ sender: Any) {
         (sourceLanguage, targetLanguage) = (targetLanguage, sourceLanguage)
@@ -56,12 +72,13 @@ class TranslateViewController: UIViewController {
         })
     }
 
-    // error alert
-    private func presentAlert() {
-        let alertVC = UIAlertController(title: "Erreur", message: "Impossible de traduire le texte", preferredStyle: .alert)
-        let actionOk = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alertVC.addAction(actionOk)
-        present(alertVC, animated: true, completion: nil)
+    // convert the translated text into audio
+    @IBAction func textToSpeech(_ sender: Any) {
+        let utterance = AVSpeechUtterance(string: translatedText.text!)
+        let language = targetLanguage == .french ? "fr-FR" : "en-US"
+        utterance.voice = AVSpeechSynthesisVoice(language: language)
+        let synth = AVSpeechSynthesizer()
+        synth.speak(utterance)
     }
 }
 
@@ -82,7 +99,7 @@ extension TranslateViewController: UITextViewDelegate {
         clearButton.isHidden = false
         if userText.textColor == UIColor.lightGray {
             userText.text = nil
-            userText.textColor = UIColor.black
+            userText.textColor = UIColor(named: "Color_text")
         }
     }
 

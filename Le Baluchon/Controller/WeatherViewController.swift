@@ -10,12 +10,8 @@ import UIKit
 
 class WeatherViewController: UIViewController {
 
-    var selectedCities: [City] {
-        return cities.filter { $0.selected }
-    }
-
     // MARK: - Outlets
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var weatherTableView: UITableView!
     @IBOutlet weak var updateAI: UIActivityIndicatorView!
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     
@@ -27,7 +23,7 @@ class WeatherViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
+        weatherTableView.reloadData()
     }
 
     private func updateWeather() {
@@ -41,9 +37,7 @@ class WeatherViewController: UIViewController {
                     city.conditionImage = UIImage(named: weatherJSON.list[index].weather[0].conditionImage)
                 }
             } else {
-                for city in cities {
-                    city.caption = city.name + " (Problème de connexion)"
-                }
+                self.presentAlert()
             }
             self.endUpdating()
         })
@@ -51,18 +45,23 @@ class WeatherViewController: UIViewController {
 
     private func startUpdating() {
         refreshButton.isEnabled = false
-        refreshButton.tintColor = UIColor.white
+        refreshButton.tintColor = UIColor(named: "Color_bar")!
         updateAI.startAnimating()
-        for city in cities {
-            city.caption = city.name + " (Mise à jour...)"
-        }
     }
 
     private func endUpdating() {
-        tableView.reloadData()
+        weatherTableView.reloadData()
         updateAI.stopAnimating()
-        refreshButton.tintColor = UIColor.darkText
+        refreshButton.tintColor = UIColor(named: "Color_background")!
         refreshButton.isEnabled = true
+    }
+
+    // error alert
+    private func presentAlert() {
+        let alertVC = UIAlertController(title: "Vérifiez votre connexion", message: "Nous ne sommes pas parvenus à récupérer la météo.", preferredStyle: .alert)
+        let actionOk = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alertVC.addAction(actionOk)
+        present(alertVC, animated: true, completion: nil)
     }
 
     // MARK: - Actions
@@ -94,10 +93,14 @@ extension WeatherViewController: UITableViewDataSource {
 // MARK: - Table view delegate
 extension WeatherViewController: UITableViewDelegate {
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            selectedCities[indexPath.row].selected = false
-            tableView.reloadData()
+    // create a swipe action to hide cells
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let hideAction = UIContextualAction(style: .normal, title: "Masquer") { (contextAction: UIContextualAction, sourceView: UIView, completionHandler: (Bool) -> Void) in
+            availableCities.append(selectedCities.remove(at: indexPath.row))
+            self.weatherTableView.reloadData()
         }
+        hideAction.backgroundColor = UIColor(named: "Color_bar")
+
+        return UISwipeActionsConfiguration(actions: [hideAction])
     }
 }

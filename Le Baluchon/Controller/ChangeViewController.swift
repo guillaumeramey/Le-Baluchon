@@ -18,6 +18,13 @@ class ChangeViewController: UIViewController {
         super.viewDidLoad()
         updateRates()
 
+        // apply design
+        for textView in amounts {
+            textView.layer.cornerRadius = 5.0
+            textView.layer.borderColor = UIColor(named: "Color_bar")!.cgColor
+            textView.layer.borderWidth = 1
+        }
+        
         topView = currencies[0]
     }
 
@@ -35,7 +42,7 @@ class ChangeViewController: UIViewController {
                 }
             } else {
                 self.lastUpdate.text = "Mise à jour impossible"
-                self.alert(with: "Impossible de mettre à jour le taux de change")
+                self.presentAlert(with: "Impossible de mettre à jour le taux de change")
             }
             self.stopUpdating()
         }
@@ -43,7 +50,7 @@ class ChangeViewController: UIViewController {
 
     private func startUpdating() {
         refreshButton.isEnabled = false
-        refreshButton.tintColor = UIColor.white
+        refreshButton.tintColor = UIColor(named: "Color_bar")!
         updateAI.startAnimating()
         for amount in amounts {
             amount.isEnabled = false
@@ -53,7 +60,7 @@ class ChangeViewController: UIViewController {
 
     private func stopUpdating() {
         updateAI.stopAnimating()
-        refreshButton.tintColor = UIColor.darkText
+        refreshButton.tintColor = UIColor(named: "Color_background")!
         refreshButton.isEnabled = true
     }
 
@@ -61,16 +68,16 @@ class ChangeViewController: UIViewController {
         if ChangeService.shared.isUpdateNeeded {
             updateRates()
         } else {
-            alert(with: "Le taux de change est déjà à jour.")
+            presentAlert(with: "Le taux de change est déjà à jour.")
         }
     }
 
     @IBAction func amountEdited(_ sender: UITextField) {
         switch sender.tag {
         case 1:
-            amounts[1].text = change.convert(amounts[0].text, from: .euro, to: .dollarUS)
+            amounts[1].text = change.convert(amounts[0].text, from: .euro, to: .dollarUS).replacingOccurrences(of: ",", with: ".")
         case 2:
-            amounts[0].text =  change.convert(amounts[1].text, from: .dollarUS, to: .euro)
+            amounts[0].text =  change.convert(amounts[1].text, from: .dollarUS, to: .euro).replacingOccurrences(of: ",", with: ".")
         default:
             break
         }
@@ -93,7 +100,7 @@ class ChangeViewController: UIViewController {
     }
 
     // error alert
-    private func alert(with message: String) {
+    private func presentAlert(with message: String) {
         let alertVC = UIAlertController(title: "Alerte", message: message, preferredStyle: .alert)
         let actionOk = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alertVC.addAction(actionOk)

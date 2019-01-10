@@ -27,11 +27,13 @@ struct Change: Decodable {
 
     // convert an amount from a currency to another
     func convert(_ amount: String?, from sourceCurrency: Currency, to targetCurrency: Currency) -> String {
+
         guard let amountString = amount else {
             return ""
         }
 
-        guard let amountFloat = Float(amountString) else {
+        // Bug with the decimal separator on the pad
+        guard let amountFloat = Float(amountString.replacingOccurrences(of: ",", with: ".")) else {
             return ""
         }
 
