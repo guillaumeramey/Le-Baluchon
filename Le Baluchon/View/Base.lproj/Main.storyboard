@@ -324,7 +324,7 @@
                                 </textAttributes>
                                 <items>
                                     <navigationItem title="Villes" id="ehB-ku-L8N">
-                                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="a1V-5w-Zl7">
+                                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="a1V-5w-Zl7">
                                             <color key="tintColor" name="Color_background"/>
                                             <connections>
                                                 <action selector="doneButtonPressed:" destination="hvt-3V-irS" id="uFd-hQ-YHh"/>

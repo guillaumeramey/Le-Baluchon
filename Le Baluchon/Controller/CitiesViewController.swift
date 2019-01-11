@@ -86,5 +86,6 @@ extension CitiesViewController: UITableViewDelegate {
         if destinationIndexPath.section == 0 {
             selectedCities.insert(movedCity, at: destinationIndexPath.row)
         }
+        tableView.reloadData()
     }
 }

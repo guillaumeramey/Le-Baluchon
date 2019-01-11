@@ -4,7 +4,6 @@ class ChangeViewController: UIViewController {
 
     // MARK: - Properties
     private var change: Change!
-    private var rate: Float!
     private var topView: UIStackView!
 
     // MARK: - Outlets
@@ -75,9 +74,9 @@ class ChangeViewController: UIViewController {
     @IBAction func amountEdited(_ sender: UITextField) {
         switch sender.tag {
         case 1:
-            amounts[1].text = change.convert(amounts[0].text, from: .euro, to: .dollarUS).replacingOccurrences(of: ",", with: ".")
+            amounts[1].text = change.convert(amounts[0].text, from: .euro, to: .dollarUS)
         case 2:
-            amounts[0].text =  change.convert(amounts[1].text, from: .dollarUS, to: .euro).replacingOccurrences(of: ",", with: ".")
+            amounts[0].text = change.convert(amounts[1].text, from: .dollarUS, to: .euro)
         default:
             break
         }
