@@ -1,52 +1,26 @@
+//
+//  Change.swift
+//  Le Baluchon
+//
+//  Copyright © 2019 Guillaume Ramey. All rights reserved.
+//
+
 import Foundation
 
 struct Change: Decodable {
-    enum Currency: String {
-        case euro = "EUR"
-        case dollarUS = "USD"
-    }
 
     var rates: [String : Float]
     private var date: String
 
-    // formats the date for display
-    var dateFormatted: String {
+    // convert the string in json into date
+    var getDate: Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "y-M-d"
 
-        guard let date = dateFormatter.date(from: date) else {
-            return "Impossible de formater la date"
+        guard let dateFormatted = dateFormatter.date(from: date) else {
+            return nil
         }
 
-        dateFormatter.dateStyle = .long
-        dateFormatter.timeStyle = .none
-        dateFormatter.locale = Locale(identifier: "FR-fr")
-
-        return dateFormatter.string(from: date)
-    }
-
-    // convert an amount from a currency to another
-    func convert(_ amount: String?, from sourceCurrency: Currency, to targetCurrency: Currency) -> String {
-
-        guard let amountString = amount else {
-            return ""
-        }
-
-        // Bug with the decimal separator on the pad
-        guard let amountFloat = Float(amountString.replacingOccurrences(of: ",", with: ".")) else {
-            return ""
-        }
-
-        if targetCurrency == .euro {
-            guard let currencyRate = rates[sourceCurrency.rawValue] else {
-                return ""
-            }
-            return String(format: "%.3f", amountFloat * 1 / currencyRate)
-        } else {
-            guard let currencyRate = rates[targetCurrency.rawValue] else {
-                return ""
-            }
-            return String(format: "%.3f", amountFloat * currencyRate)
-        }
+        return dateFormatted
     }
 }

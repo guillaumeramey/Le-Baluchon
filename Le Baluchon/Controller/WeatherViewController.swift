@@ -2,7 +2,6 @@
 //  WeatherTableViewController.swift
 //  Le Baluchon
 //
-//  Created by Guillaume Ramey on 02/01/2019.
 //  Copyright © 2019 Guillaume Ramey. All rights reserved.
 //
 
@@ -12,12 +11,17 @@ class WeatherViewController: UIViewController {
 
     // MARK: - Outlets
     @IBOutlet weak var weatherTableView: UITableView!
-    @IBOutlet weak var updateAI: UIActivityIndicatorView!
-    @IBOutlet weak var refreshButton: UIBarButtonItem!
-    
+
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // pull to refresh
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(self.updateWeather), for: .valueChanged)
+        weatherTableView.refreshControl = refreshControl
+
+        refreshControl.beginRefreshingWithAnimation()
         updateWeather()
     }
 
@@ -26,8 +30,7 @@ class WeatherViewController: UIViewController {
         weatherTableView.reloadData()
     }
 
-    private func updateWeather() {
-        startUpdating()
+    @objc private func updateWeather() {
         WeatherService.shared.getWeather(for: allCities, callback: { (success, weatherJSON) in
             if success, let weatherJSON = weatherJSON {
                 for (index, city) in allCities.enumerated() {
@@ -39,21 +42,9 @@ class WeatherViewController: UIViewController {
             } else {
                 self.presentAlert()
             }
-            self.endUpdating()
+            self.weatherTableView.reloadData()
+            self.weatherTableView.refreshControl?.endRefreshing()
         })
-    }
-
-    private func startUpdating() {
-        refreshButton.isEnabled = false
-        refreshButton.tintColor = UIColor(named: "Color_bar")!
-        updateAI.startAnimating()
-    }
-
-    private func endUpdating() {
-        weatherTableView.reloadData()
-        updateAI.stopAnimating()
-        refreshButton.tintColor = UIColor(named: "Color_background")!
-        refreshButton.isEnabled = true
     }
 
     // error alert
@@ -62,11 +53,6 @@ class WeatherViewController: UIViewController {
         let actionOk = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alertVC.addAction(actionOk)
         present(alertVC, animated: true, completion: nil)
-    }
-
-    // MARK: - Actions
-    @IBAction func refreshButtonPressed(_ sender: Any) {
-        updateWeather()
     }
 }
 
@@ -102,5 +88,17 @@ extension WeatherViewController: UITableViewDelegate {
         hideAction.backgroundColor = UIColor(named: "Color_bar")
 
         return UISwipeActionsConfiguration(actions: [hideAction])
+    }
+}
+
+extension UIRefreshControl {
+
+    func beginRefreshingWithAnimation() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+            if let scrollView = self.superview as? UIScrollView {
+                scrollView.setContentOffset(CGPoint(x: 0, y: scrollView.contentOffset.y - self.frame.height), animated: true)
+            }
+            self.beginRefreshing()
+        }
     }
 }

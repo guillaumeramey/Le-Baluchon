@@ -3,7 +3,7 @@ import XCTest
 
 class ChangeServiceTestCase: XCTestCase {
 
-    func testGetRatesShouldPostSuccessCallbackIfNoErrorAndCorrectDataAndUpdateIsNotNeeded() {
+    func testGetRatesShouldPostSuccessCallbackIfNoErrorAndCorrectData() {
         // Given
         let changeService = ChangeService(
             changeSession: URLSessionFake(
@@ -19,11 +19,11 @@ class ChangeServiceTestCase: XCTestCase {
 
             let rates: [String : Float] = ["USD": 1.138349]
             let formattedDate = "23 décembre 2018"
-            let amountFromEuroToDollar = change!.convert("1", from: Change.Currency.euro, to: Change.Currency.dollarUS)
-            let amountFromDollarToEuro = change!.convert("1", from: Change.Currency.dollarUS, to: Change.Currency.euro)
+            let amountFromEuroToDollar = changeService.convert("1", from: ChangeService.Currency.euro, to: ChangeService.Currency.dollarUS, with: rates)
+            let amountFromDollarToEuro = changeService.convert("1", from: ChangeService.Currency.dollarUS, to: ChangeService.Currency.euro, with: rates)
 
             XCTAssertEqual(rates, change!.rates)
-            XCTAssertEqual(formattedDate, change!.dateFormatted)
+            XCTAssertEqual(formattedDate, changeService.displayDate(change!.getDate!))
             XCTAssertEqual(amountFromEuroToDollar, "1.138")
             XCTAssertEqual(amountFromDollarToEuro, "0.878")
 
@@ -31,8 +31,6 @@ class ChangeServiceTestCase: XCTestCase {
         }
 
         wait(for: [expectation], timeout: 0.01)
-
-        XCTAssertFalse(ChangeService.shared.isUpdateNeeded)
     }
 
     func testGetRatesShouldPostFailedCallbackIfError() {

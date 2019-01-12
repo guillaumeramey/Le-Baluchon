@@ -1,3 +1,10 @@
+//
+//  ChangeService.swift
+//  Le Baluchon
+//
+//  Copyright © 2019 Guillaume Ramey. All rights reserved.
+//
+
 import Foundation
 
 class ChangeService {
@@ -10,16 +17,28 @@ class ChangeService {
 
     // Store the last update in the user defaults
     private struct Keys {
-        static let rateslastUpdate = "ratesLastUpdate"
+        static let changeLastUpdate = "changeLastUpdate"
+        static let changeLastRates = "changeLastRates"
     }
-    private static var lastUpdate: Date? {
+
+    static var lastUpdate: Date? {
         get {
-            return UserDefaults.standard.object(forKey: Keys.rateslastUpdate) as? Date
+            return UserDefaults.standard.object(forKey: Keys.changeLastUpdate) as? Date
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: Keys.rateslastUpdate)
+            UserDefaults.standard.set(newValue, forKey: Keys.changeLastUpdate)
         }
     }
+
+    static var lastRates: [String : Float]? {
+        get {
+            return UserDefaults.standard.object(forKey: Keys.changeLastRates) as? [String : Float]
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: Keys.changeLastRates)
+        }
+    }
+
     // Compare the last update with the current day
     var isUpdateNeeded: Bool {
         if let lastUpdate = ChangeService.lastUpdate {
@@ -59,7 +78,8 @@ class ChangeService {
 
                 do {
                     let change = try JSONDecoder().decode(Change.self, from: data)
-                    ChangeService.lastUpdate = Date()
+                    ChangeService.lastUpdate = change.getDate
+                    ChangeService.lastRates = change.rates
                     callback(true, change)
                 } catch {
                     callback(false, nil)
@@ -67,5 +87,45 @@ class ChangeService {
             }
         }
         task?.resume()
+    }
+
+    // MARK: - Currency conversion
+    enum Currency: String {
+        case euro = "EUR"
+        case dollarUS = "USD"
+    }
+
+    func convert(_ amount: String?, from sourceCurrency: Currency, to targetCurrency: Currency, with rates: [String : Float]) -> String {
+
+        guard let amountString = amount else {
+            return ""
+        }
+
+        // Bug with the decimal separator on the pad
+        guard let amountFloat = Float(amountString.replacingOccurrences(of: ",", with: ".")) else {
+            return ""
+        }
+
+        if targetCurrency == .euro {
+            guard let currencyRate = rates[sourceCurrency.rawValue] else {
+                return ""
+            }
+            return String(format: "%.3f", amountFloat * 1 / currencyRate)
+        } else {
+            guard let currencyRate = rates[targetCurrency.rawValue] else {
+                return ""
+            }
+            return String(format: "%.3f", amountFloat * currencyRate)
+        }
+    }
+
+    // formats the date for display
+    func displayDate(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .none
+        dateFormatter.locale = Locale(identifier: "FR-fr")
+
+        return dateFormatter.string(from: date)
     }
 }

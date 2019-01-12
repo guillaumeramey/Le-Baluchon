@@ -1,3 +1,10 @@
+//
+//  TranslateViewController.swift
+//  Le Baluchon
+//
+//  Copyright © 2019 Guillaume Ramey. All rights reserved.
+//
+
 import UIKit
 import AVFoundation
 
@@ -90,6 +97,7 @@ extension TranslateViewController: UITextFieldDelegate {
 
     @IBAction func clearButtonPressed(_ sender: Any) {
         userText.text = ""
+        translatedText.text = ""
     }
 }
 

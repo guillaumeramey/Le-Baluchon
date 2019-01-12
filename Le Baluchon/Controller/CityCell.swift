@@ -2,7 +2,6 @@
 //  WeatherCell.swift
 //  Le Baluchon
 //
-//  Created by Guillaume Ramey on 02/01/2019.
 //  Copyright © 2019 Guillaume Ramey. All rights reserved.
 //
 

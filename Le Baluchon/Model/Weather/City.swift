@@ -2,14 +2,11 @@
 //  City.swift
 //  Le Baluchon
 //
-//  Created by Guillaume Ramey on 31/12/2018.
 //  Copyright © 2018 Guillaume Ramey. All rights reserved.
 //
 
-
 // US Cities backgrounds designes by Rwdd_studios - Freepik.com
 // Paris background designed by Freepik.com
-
 
 import UIKit
 
