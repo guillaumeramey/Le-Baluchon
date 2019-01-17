@@ -55,7 +55,7 @@ class ChangeService {
     }
 
     // API request
-    func getRates(callback: @escaping (Bool, Change?) -> Void) {
+    func getRates(callback: @escaping (Bool, ChangeJSON?) -> Void) {
 
         let urlString = apiUrl
             + "?access_key=" + apiKey
@@ -77,7 +77,7 @@ class ChangeService {
                 }
 
                 do {
-                    let change = try JSONDecoder().decode(Change.self, from: data)
+                    let change = try JSONDecoder().decode(ChangeJSON.self, from: data)
                     ChangeService.lastUpdate = change.getDate
                     ChangeService.lastRates = change.rates
                     callback(true, change)

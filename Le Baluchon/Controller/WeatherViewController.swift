@@ -40,19 +40,11 @@ class WeatherViewController: UIViewController {
                     city.conditionImage = UIImage(named: weatherJSON.list[index].weather[0].conditionImage)
                 }
             } else {
-                self.presentAlert()
+                Alert.present(title: "Vérifiez votre connexion", message: "Nous ne sommes pas parvenus à récupérer la météo.", vc: self)
             }
             self.weatherTableView.reloadData()
             self.weatherTableView.refreshControl?.endRefreshing()
         })
-    }
-
-    // error alert
-    private func presentAlert() {
-        let alertVC = UIAlertController(title: "Vérifiez votre connexion", message: "Nous ne sommes pas parvenus à récupérer la météo.", preferredStyle: .alert)
-        let actionOk = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alertVC.addAction(actionOk)
-        present(alertVC, animated: true, completion: nil)
     }
 }
 

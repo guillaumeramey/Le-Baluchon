@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Change: Decodable {
+struct ChangeJSON: Decodable {
 
     var rates: [String : Float]
     private var date: String

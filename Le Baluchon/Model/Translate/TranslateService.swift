@@ -24,7 +24,7 @@ class TranslateService {
     }
 
     // API request
-    func translate(_ textToTranslate: String, from sourceLanguage: Language, to targetLanguage: Language, callback: @escaping (Bool, Translation?) -> Void) {
+    func translate(_ textToTranslate: String, from sourceLanguage: Language, to targetLanguage: Language, callback: @escaping (Bool, TranslationJSON?) -> Void) {
 
         let urlString = apiUrl
             + "?q=" + textToTranslate
@@ -55,7 +55,7 @@ class TranslateService {
                 }
 
                 do {
-                    let translation = try JSONDecoder().decode(Translation.self, from: data)
+                    let translation = try JSONDecoder().decode(TranslationJSON.self, from: data)
                     callback(true, translation)
                 } catch {
                     callback(false, nil)

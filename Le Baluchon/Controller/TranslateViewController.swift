@@ -46,13 +46,6 @@ class TranslateViewController: UIViewController {
         targetLanguage = .english
     }
 
-    private func presentAlert() {
-        let alertVC = UIAlertController(title: "Vérifiez votre connexion", message: "Nous ne sommes pas parvenus à traduire le texte.", preferredStyle: .alert)
-        let actionOk = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alertVC.addAction(actionOk)
-        present(alertVC, animated: true, completion: nil)
-    }
-
     // MARK: - Actions
     // switch source and target languages
     @IBAction func toggleLanguage(_ sender: Any) {
@@ -73,7 +66,7 @@ class TranslateViewController: UIViewController {
             if success, let translation = translation {
                 self.translatedText.text = translation.translatedText
             } else {
-                self.presentAlert()
+                Alert.present(title: "Vérifiez votre connexion", message: "Nous ne sommes pas parvenus à traduire le texte.", vc: self)
             }
             self.translateActivityIndicator.stopAnimating()
         })

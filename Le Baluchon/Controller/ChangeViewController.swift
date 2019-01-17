@@ -55,7 +55,7 @@ class ChangeViewController: UIViewController {
                     amount.isEnabled = true
                 }
             } else {
-                self.presentAlert(type: .connexion)
+                Alert.present(title: "Vérifiez votre connexion", message: "Nous ne sommes pas parvenus à récupérer les taux de change.", vc: self)
             }
             self.stopUpdating()
         }
@@ -87,7 +87,7 @@ class ChangeViewController: UIViewController {
         if ChangeService.shared.isUpdateNeeded {
             updateRates()
         } else {
-            presentAlert(type: .updateNotNeeded)
+            Alert.present(title: "Vous êtes à jour.", message: "Les taux de change sont mis à jour quotidiennement.", vc: self)
         }
     }
 
@@ -118,27 +118,6 @@ class ChangeViewController: UIViewController {
         UIView.beginAnimations(nil, context: nil)
         (view1.frame.origin, view2.frame.origin) = (view2.frame.origin, view1.frame.origin)
         UIView.commitAnimations()
-    }
-
-    // MARK: - Alerts
-    enum AlertType {
-        case connexion, updateNotNeeded
-    }
-
-    private func presentAlert(type: AlertType) {
-        var title, message: String
-        switch type {
-        case .connexion:
-            title = "Vérifiez votre connexion"
-            message = "Nous ne sommes pas parvenus à récupérer les taux de change."
-        case .updateNotNeeded:
-            title = "Vous êtes à jour."
-            message = "Les taux de change sont mis à jour quotidiennement."
-        }
-        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let actionOk = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alertVC.addAction(actionOk)
-        present(alertVC, animated: true, completion: nil)
     }
 }
 

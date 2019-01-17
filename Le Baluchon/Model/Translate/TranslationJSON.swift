@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Translation: Decodable {
+struct TranslationJSON: Decodable {
     private var data: JsonData
 
     var translatedText: String {
