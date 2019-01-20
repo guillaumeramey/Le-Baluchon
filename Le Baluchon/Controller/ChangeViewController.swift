@@ -10,8 +10,7 @@ import UIKit
 class ChangeViewController: UIViewController {
 
     // MARK: - Properties
-    private var rates: [String : Float]!
-    private var date: Date!
+    private var change: Change!
     private var topView: UIStackView!
 
     // MARK: - Outlets
@@ -28,8 +27,9 @@ class ChangeViewController: UIViewController {
         if ChangeService.shared.isUpdateNeeded {
             updateRates()
         } else {
-            date = ChangeService.lastUpdate
-            rates = ChangeService.lastRates
+            if let date = ChangeService.lastUpdate, let rates = ChangeService.lastRates {
+                change = Change(date: date, rates: rates)
+            }
             updateDisplay()
         }
 
@@ -48,8 +48,7 @@ class ChangeViewController: UIViewController {
         startUpdating()
         ChangeService.shared.getRates { (success, change) in
             if success, let change = change {
-                self.rates = change.rates
-                self.date = change.getDate
+                self.change = Change(date: change.getDate, rates: change.rates)
                 self.updateDisplay()
                 for amount in self.amounts {
                     amount.isEnabled = true
@@ -62,9 +61,9 @@ class ChangeViewController: UIViewController {
     }
 
     private func updateDisplay() {
-        lastUpdate.text = "Mis à jour le " + ChangeService.shared.displayDate(date)
+        lastUpdate.text = "Mis à jour le " + change.displayDate()
         amounts[0].text = "1"
-        amounts[1].text =  ChangeService.shared.convert(amounts[0].text, from: .euro, to: .dollarUS, with: rates)
+        amounts[1].text =  change.convert(amounts[0].text, from: .euro, to: .dollarUS)
     }
 
     private func startUpdating() {
@@ -95,9 +94,9 @@ class ChangeViewController: UIViewController {
     @IBAction func amountEdited(_ sender: UITextField) {
         switch sender.tag {
         case 0:
-            amounts[1].text = ChangeService.shared.convert(amounts[0].text, from: .euro, to: .dollarUS, with: rates)
+            amounts[1].text = change.convert(amounts[0].text, from: .euro, to: .dollarUS)
         case 1:
-            amounts[0].text = ChangeService.shared.convert(amounts[1].text, from: .dollarUS, to: .euro, with: rates)
+            amounts[0].text = change.convert(amounts[1].text, from: .dollarUS, to: .euro)
         default:
             break
         }

@@ -13,12 +13,12 @@ struct ChangeJSON: Decodable {
     private var date: String
 
     // convert the string in json into date
-    var getDate: Date? {
+    var getDate: Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "y-M-d"
 
         guard let dateFormatted = dateFormatter.date(from: date) else {
-            return nil
+            fatalError()
         }
 
         return dateFormatted

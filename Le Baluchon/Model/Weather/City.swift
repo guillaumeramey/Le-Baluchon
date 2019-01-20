@@ -15,16 +15,16 @@ class City: Equatable {
     var name: String
     var caption: String
     var id: Int
-    var background: UIImage?
+    var image: UIImage
     var date: Date? = nil
     var timeZone: TimeZone
     var temperature = ""
     var conditionImage: UIImage? = nil
 
-    init(name: String, id: Int, background: String, timeZone: String) {
+    init(name: String, id: Int, image: String, timeZone: String) {
         self.name = name
         self.id = id
-        self.background = UIImage(named: "city_bg_" + background) ?? nil
+        self.image = UIImage(named: image)!
         self.caption = name.uppercased()
         self.timeZone = TimeZone(identifier: timeZone) ?? .current
     }

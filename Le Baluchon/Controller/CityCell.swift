@@ -9,9 +9,15 @@ import UIKit
 
 class CityCell: UITableViewCell {
 
-    @IBOutlet weak var background: UIImageView!
+    @IBOutlet weak var cityImage: UIImageView!
     @IBOutlet weak var conditionImage: UIImageView!
     @IBOutlet weak var temperature: UILabel!
     @IBOutlet weak var caption: UILabel!
 
+    func set(city: City) {
+        cityImage.image = city.image
+        temperature.text = city.temperature
+        conditionImage.image = city.conditionImage
+        caption.text = city.caption
+    }
 }

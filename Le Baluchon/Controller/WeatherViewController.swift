@@ -42,8 +42,8 @@ class WeatherViewController: UIViewController {
             } else {
                 Alert.present(title: "Vérifiez votre connexion", message: "Nous ne sommes pas parvenus à récupérer la météo.", vc: self)
             }
-            self.weatherTableView.reloadData()
             self.weatherTableView.refreshControl?.endRefreshing()
+            self.weatherTableView.reloadData()
         })
     }
 }
@@ -56,13 +56,9 @@ extension WeatherViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cityCell", for: indexPath) as? CityCell else {
-            return UITableViewCell()
-        }
-        cell.background.image = selectedCities[indexPath.row].background
-        cell.temperature.text = selectedCities[indexPath.row].temperature
-        cell.conditionImage.image = selectedCities[indexPath.row].conditionImage
-        cell.caption.text = selectedCities[indexPath.row].caption
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cityCell") as! CityCell
+
+        cell.set(city: selectedCities[indexPath.row])
 
         return cell
     }
