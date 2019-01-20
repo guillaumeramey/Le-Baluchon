@@ -62,9 +62,9 @@ class TranslateViewController: UIViewController {
         translatedText.text = ""
         translateActivityIndicator.startAnimating()
 
-        TranslateService.shared.translate(userText.text, from: sourceLanguage, to: targetLanguage, callback: { (success, translation) in
-            if success, let translation = translation {
-                self.translatedText.text = translation.translatedText
+        TranslateService.shared.translate(userText.text, from: sourceLanguage, to: targetLanguage, callback: { (success, translationJSON) in
+            if success, let translationJSON = translationJSON {
+                self.translatedText.text = translationJSON.translatedText
             } else {
                 Alert.present(title: "Vérifiez votre connexion", message: "Nous ne sommes pas parvenus à traduire le texte.", vc: self)
             }

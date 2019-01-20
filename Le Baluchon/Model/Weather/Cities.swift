@@ -16,35 +16,3 @@ let seattle = City(name: "Seattle", id: 5809844, image: "seattle", timeZone: "PS
 let washington = City(name: "Washington", id: 4366164, image: "washington", timeZone: "EST")
 
 let allCities = [chicago, lasVegas, losAngeles, newYork, paris, seattle, washington]
-
-// Store the selected cities in the user defaults by using an array of id
-private struct Keys {
-    static let selectedCities = "selectedCities"
-}
-
-var selectedCities: [City] {
-    get {
-        guard let idArray = UserDefaults.standard.array(forKey: Keys.selectedCities) as? [Int] else {
-            return [paris, newYork]
-        }
-
-        var cities = [City]()
-
-        for id in idArray {
-            for city in allCities {
-                if city.id == id {
-                    cities.append(city)
-                }
-            }
-        }
-
-        return cities
-    }
-    set {
-        UserDefaults.standard.set(newValue.map { $0.id }, forKey: Keys.selectedCities)
-    }
-}
-
-var availableCities: [City] {
-    return allCities.filter { !selectedCities.contains($0) }
-}

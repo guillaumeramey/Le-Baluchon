@@ -38,9 +38,9 @@ extension CitiesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return selectedCities.count
+            return Persist.selectedCities.count
         case 1:
-            return availableCities.count
+            return Persist.availableCities.count
         default:
             return 0
         }
@@ -51,9 +51,9 @@ extension CitiesViewController: UITableViewDataSource {
 
         switch indexPath.section {
         case 0:
-            cell.textLabel?.text = selectedCities[indexPath.row].name
+            cell.textLabel?.text = Persist.selectedCities[indexPath.row].name
         case 1:
-            cell.textLabel?.text = availableCities[indexPath.row].name
+            cell.textLabel?.text = Persist.availableCities[indexPath.row].name
         default:
             break
         }
@@ -77,13 +77,13 @@ extension CitiesViewController: UITableViewDelegate {
         let movedCity: City!
 
         if sourceIndexPath.section == 0 {
-            movedCity = selectedCities.remove(at: sourceIndexPath.row)
+            movedCity = Persist.selectedCities.remove(at: sourceIndexPath.row)
         } else {
-            movedCity = availableCities[sourceIndexPath.row]
+            movedCity = Persist.availableCities[sourceIndexPath.row]
         }
         
         if destinationIndexPath.section == 0 {
-            selectedCities.insert(movedCity, at: destinationIndexPath.row)
+            Persist.selectedCities.insert(movedCity, at: destinationIndexPath.row)
         }
         tableView.reloadData()
     }

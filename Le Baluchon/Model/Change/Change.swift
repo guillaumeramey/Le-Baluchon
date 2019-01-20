@@ -9,6 +9,7 @@ import Foundation
 
 class Change {
 
+    // MARK: - Properties
     enum Currency: String {
         case euro = "EUR"
         case dollarUS = "USD"
@@ -20,8 +21,12 @@ class Change {
     init(date: Date, rates: [String : Float]) {
         self.date = date
         self.rates = rates
+
+        Persist.lastUpdate = date
+        Persist.lastRates = rates
     }
 
+    // MARK: - Methods
     func convert(_ amount: String?, from sourceCurrency: Currency, to targetCurrency: Currency) -> String {
 
         guard let amountString = amount else {

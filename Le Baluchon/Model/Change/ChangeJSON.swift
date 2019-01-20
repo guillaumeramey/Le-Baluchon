@@ -9,15 +9,20 @@ import Foundation
 
 struct ChangeJSON: Decodable {
 
+    enum CodingKeys: String, CodingKey {
+        case rates = "rates"
+        case dateString = "date"
+    }
+
     var rates: [String : Float]
-    private var date: String
+    private var dateString: String
 
     // convert the string in json into date
-    var getDate: Date {
+    var date: Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "y-M-d"
 
-        guard let dateFormatted = dateFormatter.date(from: date) else {
+        guard let dateFormatted = dateFormatter.date(from: dateString) else {
             fatalError()
         }
 

@@ -9,10 +9,6 @@ import UIKit
 
 class ChangeViewController: UIViewController {
 
-    // MARK: - Properties
-    private var change: Change!
-    private var topView: UIStackView!
-
     // MARK: - Outlets
     @IBOutlet weak var lastUpdate: UILabel!
     @IBOutlet var currencies: [UIStackView]!
@@ -20,35 +16,32 @@ class ChangeViewController: UIViewController {
     @IBOutlet weak var updateAI: UIActivityIndicatorView!
     @IBOutlet weak var refreshButton: UIBarButtonItem!
 
+    // MARK: - Properties
+    private var change: Change!
+    private var topView: UIStackView!
+
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        applyDesign()
+        topView = currencies[0]
+        updateRates()
+    }
 
-        if ChangeService.shared.isUpdateNeeded {
-            updateRates()
-        } else {
-            if let date = ChangeService.lastUpdate, let rates = ChangeService.lastRates {
-                change = Change(date: date, rates: rates)
-            }
-            updateDisplay()
-        }
-
-        // apply design
+    fileprivate func applyDesign() {
         for textView in amounts {
             textView.layer.cornerRadius = 5.0
             textView.layer.borderColor = UIColor(named: "Color_bar")!.cgColor
             textView.layer.borderWidth = 1
         }
-        
-        topView = currencies[0]
     }
 
     // API request to update currencies rates
     private func updateRates() {
         startUpdating()
-        ChangeService.shared.getRates { (success, change) in
-            if success, let change = change {
-                self.change = Change(date: change.getDate, rates: change.rates)
+        ChangeService.shared.getRates { (success, changeJSON) in
+            if success, let changeJSON = changeJSON {
+                self.updateChange(with: changeJSON)
                 self.updateDisplay()
                 for amount in self.amounts {
                     amount.isEnabled = true
@@ -57,6 +50,17 @@ class ChangeViewController: UIViewController {
                 Alert.present(title: "Vérifiez votre connexion", message: "Nous ne sommes pas parvenus à récupérer les taux de change.", vc: self)
             }
             self.stopUpdating()
+        }
+    }
+
+    private func updateChange(with changeJSON: ChangeJSON) {
+        switch Persist.isUpdateNeeded {
+        case true:
+            change = Change(date: changeJSON.date, rates: changeJSON.rates)
+        case false:
+            if let date = Persist.lastUpdate, let rates = Persist.lastRates {
+                change = Change(date: date, rates: rates)
+            }
         }
     }
 
@@ -83,7 +87,7 @@ class ChangeViewController: UIViewController {
 
     // MARK: - Actions
     @IBAction func refreshButtonPressed(_ sender: Any) {
-        if ChangeService.shared.isUpdateNeeded {
+        if Persist.isUpdateNeeded {
             updateRates()
         } else {
             Alert.present(title: "Vous êtes à jour.", message: "Les taux de change sont mis à jour quotidiennement.", vc: self)

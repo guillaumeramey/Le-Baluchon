@@ -12,18 +12,20 @@ class ChangeServiceTestCase: XCTestCase {
                 error: nil))
         // When
         let expectation = XCTestExpectation(description: "Wait for queue change.")
-        changeService.getRates { (success, change) in
+        changeService.getRates { (success, changeJSON) in
             // Then
             XCTAssertTrue(success)
-            XCTAssertNotNil(change)
+            XCTAssertNotNil(changeJSON)
+
+            let change = Change(date: (changeJSON?.date)!, rates: (changeJSON?.rates)!)
 
             let rates: [String : Float] = ["USD": 1.138349]
             let formattedDate = "23 décembre 2018"
-            let amountFromEuroToDollar = changeService.convert("1", from: ChangeService.Currency.euro, to: ChangeService.Currency.dollarUS, with: rates)
-            let amountFromDollarToEuro = changeService.convert("1", from: ChangeService.Currency.dollarUS, to: ChangeService.Currency.euro, with: rates)
+            let amountFromEuroToDollar = change.convert("1", from: .euro, to: .dollarUS)
+            let amountFromDollarToEuro = change.convert("1", from: .dollarUS, to: .euro)
 
-            XCTAssertEqual(rates, change!.rates)
-            XCTAssertEqual(formattedDate, changeService.displayDate(change!.getDate!))
+            XCTAssertEqual(rates, change.rates)
+            XCTAssertEqual(formattedDate, change.displayDate())
             XCTAssertEqual(amountFromEuroToDollar, "1.138")
             XCTAssertEqual(amountFromDollarToEuro, "0.878")
 
@@ -39,10 +41,10 @@ class ChangeServiceTestCase: XCTestCase {
             changeSession: URLSessionFake(data: nil,response: nil,error: FakeResponseData.error))
         // When
         let expectation = XCTestExpectation(description: "Wait for queue change.")
-        changeService.getRates { (success, change) in
+        changeService.getRates { (success, changeJSON) in
             // Then
             XCTAssertFalse(success)
-            XCTAssertNil(change)
+            XCTAssertNil(changeJSON)
             expectation.fulfill()
         }
 
@@ -55,10 +57,10 @@ class ChangeServiceTestCase: XCTestCase {
             changeSession: URLSessionFake(data: nil,response: nil,error: nil))
         // When
         let expectation = XCTestExpectation(description: "Wait for queue change.")
-        changeService.getRates { (success, change) in
+        changeService.getRates { (success, changeJSON) in
             // Then
             XCTAssertFalse(success)
-            XCTAssertNil(change)
+            XCTAssertNil(changeJSON)
             expectation.fulfill()
         }
 
@@ -74,10 +76,10 @@ class ChangeServiceTestCase: XCTestCase {
                 error: nil))
         // When
         let expectation = XCTestExpectation(description: "Wait for queue change.")
-        changeService.getRates { (success, change) in
+        changeService.getRates { (success, changeJSON) in
             // Then
             XCTAssertFalse(success)
-            XCTAssertNil(change)
+            XCTAssertNil(changeJSON)
             expectation.fulfill()
         }
 
@@ -93,10 +95,10 @@ class ChangeServiceTestCase: XCTestCase {
                 error: nil))
         // When
         let expectation = XCTestExpectation(description: "Wait for queue change.")
-        changeService.getRates { (success, change) in
+        changeService.getRates { (success, changeJSON) in
             // Then
             XCTAssertFalse(success)
-            XCTAssertNil(change)
+            XCTAssertNil(changeJSON)
             expectation.fulfill()
         }
 

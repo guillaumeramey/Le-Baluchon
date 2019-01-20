@@ -18,16 +18,16 @@ class CitiesTestCase: XCTestCase {
 
     func testGivenListOfCitiesWhenAddingCityToSelectedCitiesThenCityIsRemovedFromAvailableCities() {
         // given
-        XCTAssertEqual(allCities.count, selectedCities.count + availableCities.count)
-        XCTAssertTrue(availableCities.contains(chicago))
-        XCTAssertFalse(selectedCities.contains(chicago))
+        XCTAssertEqual(allCities.count, Persist.selectedCities.count + Persist.availableCities.count)
+        XCTAssertTrue(Persist.availableCities.contains(chicago))
+        XCTAssertFalse(Persist.selectedCities.contains(chicago))
 
         // when
-        selectedCities.append(chicago)
+        Persist.selectedCities.append(chicago)
 
         // then
-        XCTAssertEqual(allCities.count, selectedCities.count + availableCities.count)
-        XCTAssertFalse(availableCities.contains(chicago))
-        XCTAssertTrue(selectedCities.contains(chicago))
+        XCTAssertEqual(allCities.count, Persist.selectedCities.count + Persist.availableCities.count)
+        XCTAssertFalse(Persist.availableCities.contains(chicago))
+        XCTAssertTrue(Persist.selectedCities.contains(chicago))
     }
 }

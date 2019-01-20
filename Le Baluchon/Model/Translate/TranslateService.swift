@@ -55,8 +55,8 @@ class TranslateService {
                 }
 
                 do {
-                    let translation = try JSONDecoder().decode(TranslationJSON.self, from: data)
-                    callback(true, translation)
+                    let translationJSON = try JSONDecoder().decode(TranslationJSON.self, from: data)
+                    callback(true, translationJSON)
                 } catch {
                     callback(false, nil)
                 }

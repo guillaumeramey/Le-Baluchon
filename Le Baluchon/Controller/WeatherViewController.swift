@@ -52,13 +52,13 @@ class WeatherViewController: UIViewController {
 extension WeatherViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return selectedCities.count
+        return Persist.selectedCities.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cityCell") as! CityCell
 
-        cell.set(city: selectedCities[indexPath.row])
+        cell.set(city: Persist.selectedCities[indexPath.row])
 
         return cell
     }
@@ -70,7 +70,7 @@ extension WeatherViewController: UITableViewDelegate {
     // create a swipe action to hide cells
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let hideAction = UIContextualAction(style: .normal, title: "Masquer") { (contextAction: UIContextualAction, sourceView: UIView, completionHandler: (Bool) -> Void) in
-            selectedCities.remove(at: indexPath.row)
+            Persist.selectedCities.remove(at: indexPath.row)
             self.weatherTableView.reloadData()
         }
         hideAction.backgroundColor = UIColor(named: "Color_bar")
