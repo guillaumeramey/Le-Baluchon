@@ -11,7 +11,6 @@
 import UIKit
 
 class City: Equatable {
-
     var name: String
     var caption: String
     var id: Int

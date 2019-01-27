@@ -28,22 +28,24 @@ class TranslateViewController: UIViewController {
 
         userText.delegate = self
 
+        sourceLanguage = .french
+        targetLanguage = .english
+
+        setupDesign()
+    }
+
+    private func setupDesign() {
         // text placeholder
         userText.text = "Saisissez du texte"
         userText.textColor = UIColor.lightGray
 
-        // apply design
         for textView in textViews {
             textView.layer.cornerRadius = 5.0
             textView.layer.borderColor = UIColor(named: "Color_bar")!.cgColor
             textView.layer.borderWidth = 1
             textView.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 30)
         }
-
         clearButton.isHidden = true
-
-        sourceLanguage = .french
-        targetLanguage = .english
     }
 
     // MARK: - Actions

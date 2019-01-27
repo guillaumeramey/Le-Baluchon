@@ -23,12 +23,12 @@ class ChangeViewController: UIViewController {
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        applyDesign()
+        setupDesign()
         topView = currencies[0]
         updateRates()
     }
 
-    fileprivate func applyDesign() {
+    private func setupDesign() {
         for textView in amounts {
             textView.layer.cornerRadius = 5.0
             textView.layer.borderColor = UIColor(named: "Color_bar")!.cgColor

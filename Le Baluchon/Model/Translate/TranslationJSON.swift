@@ -10,15 +10,17 @@ import Foundation
 struct TranslationJSON: Decodable {
     private var data: JsonData
 
+    struct JsonData: Decodable {
+        var translations: [Translations]
+    }
+
+    struct Translations: Decodable {
+        var translatedText: String
+    }
+
+    // easy access
     var translatedText: String {
         return data.translations[0].translatedText
     }
 }
 
-struct JsonData: Decodable {
-    var translations: [Translations]
-}
-
-struct Translations: Decodable {
-    var translatedText: String
-}

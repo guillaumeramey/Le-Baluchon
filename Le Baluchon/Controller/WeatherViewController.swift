@@ -48,7 +48,6 @@ class WeatherViewController: UIViewController {
     }
 }
 
-// MARK: - Table view data source
 extension WeatherViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -64,7 +63,6 @@ extension WeatherViewController: UITableViewDataSource {
     }
 }
 
-// MARK: - Table view delegate
 extension WeatherViewController: UITableViewDelegate {
 
     // create a swipe action to hide cells
