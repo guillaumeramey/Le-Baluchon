@@ -188,13 +188,13 @@
 			isa = PBXGroup;
 			children = (
 				A4E5326E21C2686F006E1639 /* Info.plist */,
-				A438380421CF440300F7CCC7 /* FakeResponseData.swift */,
-				A438380221CF43C400F7CCC7 /* URLSessionFake.swift */,
 				A438380621CF44E000F7CCC7 /* Change.json */,
 				A438380821CF44F000F7CCC7 /* Translate.json */,
 				A438380A21CF44FB00F7CCC7 /* Weather.json */,
-				A438380C21D08E9E00F7CCC7 /* TranslateServiceTestCase.swift */,
+				A438380421CF440300F7CCC7 /* FakeResponseData.swift */,
+				A438380221CF43C400F7CCC7 /* URLSessionFake.swift */,
 				A438380E21D092C100F7CCC7 /* ChangeServiceTestCase.swift */,
+				A438380C21D08E9E00F7CCC7 /* TranslateServiceTestCase.swift */,
 				A438381021D0A1AB00F7CCC7 /* WeatherServiceTestCase.swift */,
 				A43E074721E8FBDC00B33A5A /* CitiesTestCase.swift */,
 			);
@@ -217,8 +217,8 @@
 		A4E5327A21C26C3A006E1639 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A4E5327821C26A41006E1639 /* TranslateViewController.swift */,
 				A4E5325721C2686D006E1639 /* ChangeViewController.swift */,
+				A4E5327821C26A41006E1639 /* TranslateViewController.swift */,
 				A406F39821DD10DB00C72095 /* WeatherViewController.swift */,
 				A406F3A321DDDC2B00C72095 /* CitiesViewController.swift */,
 				A406F39A21DD120700C72095 /* CityCell.swift */,

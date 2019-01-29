@@ -69,5 +69,4 @@ class Persist {
     static var availableCities: [City] {
         return allCities.filter { !selectedCities.contains($0) }
     }
-
 }

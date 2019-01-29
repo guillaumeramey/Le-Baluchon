@@ -39,10 +39,8 @@ class TranslateService {
             return
         }
 
-        let request = URLRequest(url: url)
-
         task?.cancel()
-        task = translateSession.dataTask(with: request) { (data, response, error) in
+        task = translateSession.dataTask(with: url) { (data, response, error) in
             DispatchQueue.main.async {
                 guard let data = data, error == nil else {
                     callback(false, nil)

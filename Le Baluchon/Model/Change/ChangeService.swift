@@ -29,10 +29,13 @@ class ChangeService {
             + "?access_key=" + apiKey
             + "&symbols=USD"
 
-        let request = URLRequest(url: URL(string: urlString)!)
+        guard let url = URL(string: urlString) else {
+            callback(false, nil)
+            return
+        }
 
         task?.cancel()
-        task = changeSession.dataTask(with: request) { (data, response, error) in
+        task = changeSession.dataTask(with: url) { (data, response, error) in
             DispatchQueue.main.async {
                 guard let data = data, error == nil else {
                     callback(false, nil)

@@ -26,15 +26,18 @@ class WeatherService {
     // API request
     func getWeather(for cities: [City], callback: @escaping (Bool, WeatherJSON?) -> Void) {
 
-        let requestUrl = apiUrl
+        let urlString = apiUrl
             + "id=" + cities.map {"\($0.id)"}.joined(separator: ",")
             + "&units=metric"
             + "&appid=" + apiKey
 
-        let request = URLRequest(url: URL(string: requestUrl)!)
+        guard let url = URL(string: urlString) else {
+            callback(false, nil)
+            return
+        }
 
         task?.cancel()
-        task = weatherSession.dataTask(with: request) { (data, response, error) in
+        task = weatherSession.dataTask(with: url) { (data, response, error) in
             DispatchQueue.main.async {
                 guard let data = data, error == nil else {
                     callback(false, nil)
