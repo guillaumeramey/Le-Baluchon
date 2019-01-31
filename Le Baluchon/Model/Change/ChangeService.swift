@@ -13,7 +13,7 @@ class ChangeService {
     private init() {}
 
     private let apiUrl = "http://data.fixer.io/api/latest"
-    private let apiKey = valueForAPIKey("fixer")
+    private let apiKey = Constants.valueForAPIKey("fixer")
 
     private var task: URLSessionDataTask!
     private var changeSession = URLSession.init(configuration: .default)

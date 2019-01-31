@@ -13,7 +13,7 @@ class TranslateService {
     private init() {}
 
     private let apiUrl = "https://translation.googleapis.com/language/translate/v2"
-    private let apiKey = valueForAPIKey("google")
+    private let apiKey = Constants.valueForAPIKey("google")
 
     private var task: URLSessionDataTask!
 

@@ -46,13 +46,13 @@ class Persist {
     static var selectedCities: [City] {
         get {
             guard let idArray = UserDefaults.standard.array(forKey: Keys.selectedCities) as? [Int] else {
-                return [paris, newYork]
+                return [Constants.paris, Constants.newYork]
             }
 
             var cities = [City]()
 
             for id in idArray {
-                for city in allCities {
+                for city in Constants.allCities {
                     if city.id == id {
                         cities.append(city)
                     }
@@ -67,6 +67,6 @@ class Persist {
     }
 
     static var availableCities: [City] {
-        return allCities.filter { !selectedCities.contains($0) }
+        return Constants.allCities.filter { !selectedCities.contains($0) }
     }
 }

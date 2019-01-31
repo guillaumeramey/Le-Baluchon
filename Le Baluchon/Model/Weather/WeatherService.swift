@@ -13,7 +13,7 @@ class WeatherService {
     private init() {}
 
     let apiUrl = "http://api.openweathermap.org/data/2.5/group?"
-    let apiKey = valueForAPIKey("openweather")
+    let apiKey = Constants.valueForAPIKey("openweather")
 
     private var task: URLSessionDataTask!
 

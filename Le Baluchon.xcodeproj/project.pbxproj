@@ -16,9 +16,8 @@
 		A428ED4021F22E6700FAEE5D /* Translate.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A428ED3F21F22E6700FAEE5D /* Translate.storyboard */; };
 		A428ED4321F22E9100FAEE5D /* Change.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A428ED4121F22E9100FAEE5D /* Change.storyboard */; };
 		A428ED4521F2DAEF00FAEE5D /* Change.swift in Sources */ = {isa = PBXBuildFile; fileRef = A428ED4421F2DAEF00FAEE5D /* Change.swift */; };
-		A428ED4721F2E03200FAEE5D /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A428ED4621F2E03200FAEE5D /* Cities.swift */; };
+		A428ED4721F2E03200FAEE5D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A428ED4621F2E03200FAEE5D /* Constants.swift */; };
 		A428ED4921F4383400FAEE5D /* Persist.swift in Sources */ = {isa = PBXBuildFile; fileRef = A428ED4821F4383400FAEE5D /* Persist.swift */; };
-		A438380121CE49DA00F7CCC7 /* ApiKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = A438380021CE49DA00F7CCC7 /* ApiKeys.swift */; };
 		A438380321CF43C400F7CCC7 /* URLSessionFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = A438380221CF43C400F7CCC7 /* URLSessionFake.swift */; };
 		A438380521CF440300F7CCC7 /* FakeResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A438380421CF440300F7CCC7 /* FakeResponseData.swift */; };
 		A438380721CF44E000F7CCC7 /* Change.json in Resources */ = {isa = PBXBuildFile; fileRef = A438380621CF44E000F7CCC7 /* Change.json */; };
@@ -64,9 +63,8 @@
 		A428ED3F21F22E6700FAEE5D /* Translate.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Translate.storyboard; sourceTree = "<group>"; };
 		A428ED4221F22E9100FAEE5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Le Baluchon/View/Base.lproj/Change.storyboard"; sourceTree = "<group>"; };
 		A428ED4421F2DAEF00FAEE5D /* Change.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Change.swift; sourceTree = "<group>"; };
-		A428ED4621F2E03200FAEE5D /* Cities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
+		A428ED4621F2E03200FAEE5D /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A428ED4821F4383400FAEE5D /* Persist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persist.swift; sourceTree = "<group>"; };
-		A438380021CE49DA00F7CCC7 /* ApiKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeys.swift; sourceTree = "<group>"; };
 		A438380221CF43C400F7CCC7 /* URLSessionFake.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionFake.swift; sourceTree = "<group>"; };
 		A438380421CF440300F7CCC7 /* FakeResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeResponseData.swift; sourceTree = "<group>"; };
 		A438380621CF44E000F7CCC7 /* Change.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Change.json; sourceTree = "<group>"; };
@@ -120,7 +118,6 @@
 				A443F87C21C8927900410D10 /* WeatherService.swift */,
 				A443F87E21C8936D00410D10 /* WeatherJSON.swift */,
 				A45A0C9021D9AFFB00532EDF /* City.swift */,
-				A428ED4621F2E03200FAEE5D /* Cities.swift */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -230,7 +227,7 @@
 			isa = PBXGroup;
 			children = (
 				A428ED3821F0D65900FAEE5D /* Alert.swift */,
-				A438380021CE49DA00F7CCC7 /* ApiKeys.swift */,
+				A428ED4621F2E03200FAEE5D /* Constants.swift */,
 				A428ED4821F4383400FAEE5D /* Persist.swift */,
 				A45A0C8A21D8CDA700532EDF /* Change */,
 				A45A0C8921D8CD9800532EDF /* Translate */,
@@ -352,9 +349,8 @@
 				A406F39C21DD120700C72095 /* CityCell.swift in Sources */,
 				A443F87D21C8927900410D10 /* WeatherService.swift in Sources */,
 				A428ED3921F0D65900FAEE5D /* Alert.swift in Sources */,
-				A438380121CE49DA00F7CCC7 /* ApiKeys.swift in Sources */,
 				A428ED4921F4383400FAEE5D /* Persist.swift in Sources */,
-				A428ED4721F2E03200FAEE5D /* Cities.swift in Sources */,
+				A428ED4721F2E03200FAEE5D /* Constants.swift in Sources */,
 				A4D0B93721C38AAD0013E6A8 /* ChangeService.swift in Sources */,
 				A443F87F21C8936D00410D10 /* WeatherJSON.swift in Sources */,
 				A406F3A421DDDC2B00C72095 /* CitiesViewController.swift in Sources */,

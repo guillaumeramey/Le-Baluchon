@@ -31,9 +31,9 @@ class WeatherViewController: UIViewController {
     }
 
     @objc private func updateWeather() {
-        WeatherService.shared.getWeather(for: allCities, callback: { (success, weatherJSON) in
+        WeatherService.shared.getWeather(for: Constants.allCities, callback: { (success, weatherJSON) in
             if success, let weatherJSON = weatherJSON {
-                for (index, city) in allCities.enumerated() {
+                for (index, city) in Constants.allCities.enumerated() {
                     city.temperature = "\(Int(weatherJSON.list[index].main.temp.rounded()))°"
                     city.date = weatherJSON.list[index].date
                     city.caption = city.name.uppercased() + " " + city.displayDate
@@ -69,6 +69,7 @@ extension WeatherViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let hideAction = UIContextualAction(style: .normal, title: "Masquer") { (contextAction: UIContextualAction, sourceView: UIView, completionHandler: (Bool) -> Void) in
             Persist.selectedCities.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.left)
             self.weatherTableView.reloadData()
         }
         hideAction.backgroundColor = UIColor(named: "Color_bar")
